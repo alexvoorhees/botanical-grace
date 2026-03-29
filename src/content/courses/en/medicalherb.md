@@ -9,6 +9,7 @@ order: 2
 lang: "en"
 slug: "medicalherb"
 description: "Learn the basics of medicinal herbs and work toward your JAMHA Medical Herb Coordinator certification."
+image: "/Kimiko_Site/images/courses/course2.png"
 ---
 
 ## Course Overview

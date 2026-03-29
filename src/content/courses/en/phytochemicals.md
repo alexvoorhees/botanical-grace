@@ -9,6 +9,7 @@ order: 5
 lang: "en"
 slug: "phytochemicals"
 description: "Learn about phytochemicals (plant chemical compounds) and how to use plant therapy for health maintenance."
+image: "/Kimiko_Site/images/courses/course5.png"
 ---
 
 ## Course Overview

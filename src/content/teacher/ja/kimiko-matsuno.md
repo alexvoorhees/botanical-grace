@@ -9,6 +9,7 @@ credentials:
   - "JAPA認定アーユルヴェーダアドバイザー"
   - "東京都認定 調理師免許"
   - "レイキマスター"
+image: "/Kimiko_Site/images/teacher.jpg"
 lang: "ja"
 ---
 

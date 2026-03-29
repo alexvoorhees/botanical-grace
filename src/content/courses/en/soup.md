@@ -9,6 +9,7 @@ order: 6
 lang: "en"
 slug: "soup"
 description: "Learn to make nutritious vegetable soups and smoothies for a simple, healthy diet."
+image: "/Kimiko_Site/images/courses/course6.png"
 ---
 
 ## Course Overview

@@ -6,9 +6,40 @@ import LanguageToggle from './LanguageToggle.astro';
 const lang = getLangFromUrl(Astro.url);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
+const courseGroups = {
+  ja: {
+    JAMHA: [
+      { label: 'ハーバルセラピスト', slug: 'therapist' },
+      { label: 'メディカルハーブコーディネーター', slug: 'medicalherb' },
+      { label: 'ハーブ＆ライフコーディネーター', slug: 'herblife' },
+    ],
+    AEAJ: [
+      { label: 'アロマテラピーアドバイザー', slug: 'aromatherapy' },
+    ],
+    other: [
+      { label: 'フィトケミカル植物療法', slug: 'phytochemicals' },
+      { label: '野菜のスープ・スムージー', slug: 'soup' },
+    ],
+  },
+  en: {
+    JAMHA: [
+      { label: 'Herbal Therapist', slug: 'therapist' },
+      { label: 'Medical Herb Coordinator', slug: 'medicalherb' },
+      { label: 'Herb & Life Coordinator', slug: 'herblife' },
+    ],
+    AEAJ: [
+      { label: 'Aromatherapy Advisor', slug: 'aromatherapy' },
+    ],
+    other: [
+      { label: 'Phytochemical Plant Therapy', slug: 'phytochemicals' },
+      { label: 'Soup & Smoothie Course', slug: 'soup' },
+    ],
+  },
+};
+
+const groups = courseGroups[lang] || courseGroups.en;
+
 const navItems = [
-  { href: `${base}/${lang}/`, label: t(lang, 'nav.home') },
-  { href: `${base}/${lang}/courses/`, label: t(lang, 'nav.courses') },
   { href: `${base}/${lang}/herbs/`, label: t(lang, 'nav.herbs') },
   { href: `${base}/${lang}/voice/`, label: t(lang, 'nav.voice') },
   { href: `${base}/${lang}/column/`, label: t(lang, 'nav.column') },
@@ -28,7 +59,69 @@ const navItems = [
 
       <!-- Desktop Nav -->
       <nav class="hidden lg:flex items-center gap-1">
-        {navItems.slice(1).map((item) => (
+        <!-- Courses Dropdown -->
+        <div class="relative group" id="courses-dropdown">
+          <button
+            class="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium text-text/80 hover:text-sage-600 hover:bg-sage-50 rounded-lg transition-colors"
+            aria-expanded="false"
+            aria-haspopup="true"
+          >
+            {t(lang, 'nav.courses')}
+            <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          <!-- Dropdown Panel -->
+          <div class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+            <div class="bg-white rounded-xl shadow-lg border border-sage-100 p-4 min-w-[280px]">
+              <a
+                href={`${base}/${lang}/courses/`}
+                class="block px-3 py-2 text-sm font-semibold text-sage-700 hover:bg-sage-50 rounded-lg mb-1"
+              >
+                {lang === 'ja' ? '講座一覧を見る' : 'View All Courses'} &rarr;
+              </a>
+              <div class="border-t border-sage-100 my-2"></div>
+
+              <!-- JAMHA -->
+              <p class="px-3 py-1 text-xs font-bold text-sage-500 uppercase tracking-wider">JAMHA</p>
+              {groups.JAMHA.map((c) => (
+                <a
+                  href={`${base}/${lang}/courses/${c.slug}/`}
+                  class="block px-3 py-1.5 text-sm text-text/70 hover:text-sage-600 hover:bg-sage-50 rounded-lg"
+                >
+                  {c.label}
+                </a>
+              ))}
+
+              <!-- AEAJ -->
+              <p class="px-3 py-1 mt-2 text-xs font-bold text-sage-500 uppercase tracking-wider">AEAJ</p>
+              {groups.AEAJ.map((c) => (
+                <a
+                  href={`${base}/${lang}/courses/${c.slug}/`}
+                  class="block px-3 py-1.5 text-sm text-text/70 hover:text-sage-600 hover:bg-sage-50 rounded-lg"
+                >
+                  {c.label}
+                </a>
+              ))}
+
+              <!-- Other -->
+              <p class="px-3 py-1 mt-2 text-xs font-bold text-sage-500 uppercase tracking-wider">
+                {lang === 'ja' ? 'その他' : 'Other'}
+              </p>
+              {groups.other.map((c) => (
+                <a
+                  href={`${base}/${lang}/courses/${c.slug}/`}
+                  class="block px-3 py-1.5 text-sm text-text/70 hover:text-sage-600 hover:bg-sage-50 rounded-lg"
+                >
+                  {c.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {navItems.map((item) => (
           <a
             href={item.href}
             class="px-3 py-2 text-sm font-medium text-text/80 hover:text-sage-600 hover:bg-sage-50 rounded-lg transition-colors"
@@ -61,6 +154,64 @@ const navItems = [
   <!-- Mobile Nav -->
   <nav id="mobile-menu" class="hidden lg:hidden border-t border-sage-200 bg-cream">
     <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
+      <a
+        href={`${base}/${lang}/`}
+        class="block px-4 py-3 text-base font-medium text-text/80 hover:text-sage-600 hover:bg-sage-50 rounded-lg transition-colors"
+      >
+        {t(lang, 'nav.home')}
+      </a>
+
+      <!-- Mobile Courses Accordion -->
+      <div>
+        <button
+          id="mobile-courses-btn"
+          class="w-full flex items-center justify-between px-4 py-3 text-base font-medium text-text/80 hover:text-sage-600 hover:bg-sage-50 rounded-lg transition-colors"
+          aria-expanded="false"
+        >
+          {t(lang, 'nav.courses')}
+          <svg id="mobile-courses-chevron" class="w-5 h-5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div id="mobile-courses-panel" class="hidden pl-4 space-y-0.5">
+          <a
+            href={`${base}/${lang}/courses/`}
+            class="block px-4 py-2 text-sm font-semibold text-sage-600 hover:bg-sage-50 rounded-lg"
+          >
+            {lang === 'ja' ? '講座一覧' : 'All Courses'}
+          </a>
+          <p class="px-4 pt-2 pb-1 text-xs font-bold text-sage-400 uppercase tracking-wider">JAMHA</p>
+          {groups.JAMHA.map((c) => (
+            <a
+              href={`${base}/${lang}/courses/${c.slug}/`}
+              class="block px-4 py-2 text-sm text-text/70 hover:text-sage-600 hover:bg-sage-50 rounded-lg"
+            >
+              {c.label}
+            </a>
+          ))}
+          <p class="px-4 pt-2 pb-1 text-xs font-bold text-sage-400 uppercase tracking-wider">AEAJ</p>
+          {groups.AEAJ.map((c) => (
+            <a
+              href={`${base}/${lang}/courses/${c.slug}/`}
+              class="block px-4 py-2 text-sm text-text/70 hover:text-sage-600 hover:bg-sage-50 rounded-lg"
+            >
+              {c.label}
+            </a>
+          ))}
+          <p class="px-4 pt-2 pb-1 text-xs font-bold text-sage-400 uppercase tracking-wider">
+            {lang === 'ja' ? 'その他' : 'Other'}
+          </p>
+          {groups.other.map((c) => (
+            <a
+              href={`${base}/${lang}/courses/${c.slug}/`}
+              class="block px-4 py-2 text-sm text-text/70 hover:text-sage-600 hover:bg-sage-50 rounded-lg"
+            >
+              {c.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
       {navItems.map((item) => (
         <a
           href={item.href}
@@ -88,5 +239,17 @@ const navItems = [
     menuIcon?.classList.toggle('hidden');
     closeIcon?.classList.toggle('hidden');
     btn.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  // Mobile courses accordion
+  const coursesBtn = document.getElementById('mobile-courses-btn');
+  const coursesPanel = document.getElementById('mobile-courses-panel');
+  const coursesChevron = document.getElementById('mobile-courses-chevron');
+
+  coursesBtn?.addEventListener('click', () => {
+    const isOpen = !coursesPanel?.classList.contains('hidden');
+    coursesPanel?.classList.toggle('hidden');
+    coursesChevron?.classList.toggle('rotate-180');
+    coursesBtn.setAttribute('aria-expanded', String(!isOpen));
   });
 </script>

@@ -9,6 +9,7 @@ order: 2
 lang: "ja"
 slug: "medicalherb"
 description: "メディカルハーブの基礎知識を学び、JAMHA認定メディカルハーブコーディネーター資格の取得を目指す講座です。"
+image: "/Kimiko_Site/images/courses/course2.png"
 ---
 
 ## 講座概要

@@ -9,6 +9,7 @@ order: 3
 lang: "en"
 slug: "herblife"
 description: "Learn to enjoy herbs and spices in cooking and daily life, and work toward JAMHA Herb & Life Coordinator certification."
+image: "/Kimiko_Site/images/courses/course3.png"
 ---
 
 ## Course Overview

@@ -9,6 +9,7 @@ order: 6
 lang: "ja"
 slug: "soup"
 description: "野菜を使ったスープやスムージーの作り方を学び、手軽に健康的な食生活を実践するための講座です。"
+image: "/Kimiko_Site/images/courses/course6.png"
 ---
 
 ## 講座概要

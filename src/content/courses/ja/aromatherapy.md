@@ -9,6 +9,7 @@ order: 4
 lang: "ja"
 slug: "aromatherapy"
 description: "精油の基礎知識と安全な使い方を学び、AEAJ認定アロマテラピーアドバイザー資格の取得を目指す講座です。"
+image: "/Kimiko_Site/images/courses/course4.png"
 ---
 
 ## 講座概要

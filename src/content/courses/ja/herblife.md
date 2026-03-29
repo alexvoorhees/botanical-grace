@@ -9,6 +9,7 @@ order: 3
 lang: "ja"
 slug: "herblife"
 description: "ハーブやスパイスを日常生活で楽しく活用するための知識を学び、JAMHA認定ハーブ＆ライフコーディネーター資格を目指します。"
+image: "/Kimiko_Site/images/courses/course3.png"
 ---
 
 ## 講座概要

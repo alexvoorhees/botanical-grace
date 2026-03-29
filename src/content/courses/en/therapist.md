@@ -10,6 +10,7 @@ order: 1
 lang: "en"
 slug: "therapist"
 description: "Learn about 30 medicinal herbs and 12 essential oils to earn your JAMHA Certified Herbal Therapist qualification."
+image: "/Kimiko_Site/images/courses/course1.png"
 ---
 
 ## Course Overview

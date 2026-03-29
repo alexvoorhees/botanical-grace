@@ -9,6 +9,7 @@ order: 4
 lang: "en"
 slug: "aromatherapy"
 description: "Learn the basics and safe use of essential oils to earn your AEAJ Aromatherapy Advisor certification."
+image: "/Kimiko_Site/images/courses/course4.png"
 ---
 
 ## Course Overview

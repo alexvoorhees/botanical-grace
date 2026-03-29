@@ -9,6 +9,7 @@ order: 5
 lang: "ja"
 slug: "phytochemicals"
 description: "フィトケミカル（植物化学成分）を学び、植物療法による健康維持・増進を目指す講座です。"
+image: "/Kimiko_Site/images/courses/course5.png"
 ---
 
 ## 講座概要

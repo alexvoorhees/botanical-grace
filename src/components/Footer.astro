@@ -8,28 +8,47 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <footer class="bg-sage-800 text-sage-100">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
       <!-- Brand -->
       <div>
         <h3 class="text-xl font-bold text-white mb-2">BOTANICAL GRACE 8</h3>
-        <p class="text-sage-300 text-sm">{t(lang, 'site.subtitle')}</p>
+        <p class="text-sage-300 text-sm mb-4">{t(lang, 'site.subtitle')}</p>
+        <div class="flex gap-3">
+          <a
+            href="https://www.medicalherb.or.jp/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-3 py-1.5 bg-sage-700 text-sage-200 text-xs font-medium rounded-lg hover:bg-sage-600 transition-colors"
+          >
+            JAMHA
+          </a>
+          <a
+            href="https://www.aromakankyo.or.jp/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-3 py-1.5 bg-sage-700 text-sage-200 text-xs font-medium rounded-lg hover:bg-sage-600 transition-colors"
+          >
+            AEAJ
+          </a>
+        </div>
       </div>
 
-      <!-- Links -->
+      <!-- Navigation Links -->
       <div>
         <h4 class="text-sm font-semibold text-sage-200 uppercase tracking-wider mb-4">
-          {t(lang, 'nav.courses')}
+          {lang === 'ja' ? 'サイトマップ' : 'Site Map'}
         </h4>
         <ul class="space-y-2 text-sm">
           <li><a href={`${base}/${lang}/courses/`} class="text-sage-300 hover:text-white transition-colors">{t(lang, 'nav.courses')}</a></li>
           <li><a href={`${base}/${lang}/herbs/`} class="text-sage-300 hover:text-white transition-colors">{t(lang, 'nav.herbs')}</a></li>
           <li><a href={`${base}/${lang}/voice/`} class="text-sage-300 hover:text-white transition-colors">{t(lang, 'nav.voice')}</a></li>
           <li><a href={`${base}/${lang}/column/`} class="text-sage-300 hover:text-white transition-colors">{t(lang, 'nav.column')}</a></li>
-          <li><a href="https://bg8s.theshop.jp/" target="_blank" rel="noopener noreferrer" class="text-sage-300 hover:text-white transition-colors">{t(lang, 'footer.shop')}</a></li>
+          <li><a href={`${base}/${lang}/teacher/`} class="text-sage-300 hover:text-white transition-colors">{t(lang, 'nav.teacher')}</a></li>
+          <li><a href={`${base}/${lang}/for-corporations/`} class="text-sage-300 hover:text-white transition-colors">{t(lang, 'nav.corporate')}</a></li>
         </ul>
       </div>
 
-      <!-- Contact -->
+      <!-- Contact Info -->
       <div>
         <h4 class="text-sm font-semibold text-sage-200 uppercase tracking-wider mb-4">
           {t(lang, 'nav.contact')}
@@ -41,6 +60,32 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
               TEL: {t(lang, 'footer.phone')}
             </a>
           </p>
+          <p>
+            <a href="mailto:info@botanicalgrace8.com" class="hover:text-white transition-colors">
+              info@botanicalgrace8.com
+            </a>
+          </p>
+          <p class="text-sage-400">
+            {lang === 'ja' ? '営業時間: 11:00〜20:00' : 'Hours: 11:00 AM – 8:00 PM'}
+          </p>
+        </div>
+      </div>
+
+      <!-- Shop & Contact CTA -->
+      <div>
+        <h4 class="text-sm font-semibold text-sage-200 uppercase tracking-wider mb-4">
+          {t(lang, 'nav.shop')}
+        </h4>
+        <div class="space-y-3">
+          <a
+            href="https://bg8s.theshop.jp/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block px-5 py-2 bg-sage-700 text-sage-200 font-medium rounded-lg hover:bg-sage-600 transition-colors text-sm"
+          >
+            {t(lang, 'footer.shop')} &rarr;
+          </a>
+          <br />
           <a
             href={`${base}/${lang}/contact/`}
             class="inline-block mt-2 px-5 py-2 bg-gold-400 text-sage-900 font-medium rounded-lg hover:bg-gold-300 transition-colors text-sm"

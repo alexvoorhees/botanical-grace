@@ -9,6 +9,7 @@ credentials:
   - "JAPA Certified Ayurveda Advisor"
   - "Tokyo Licensed Cook"
   - "Reiki Master"
+image: "/Kimiko_Site/images/teacher.jpg"
 lang: "en"
 ---
 

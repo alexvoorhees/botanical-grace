@@ -18,29 +18,64 @@ export async function getStaticPaths() {
 
 const { article } = Astro.props;
 const { Content } = await render(article);
+const hasImage = !!article.data.image;
+
+// Format date nicely
+const dateObj = new Date(article.data.date);
+const formattedDate = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
 <BaseLayout title={article.data.title}>
-  <article class="py-16 lg:py-24">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-      <nav class="mb-8 text-sm text-text/50">
-        <a href={`${base}/${lang}/`} class="hover:text-sage-600">{t(lang, 'nav.home')}</a>
-        <span class="mx-2">/</span>
-        <a href={`${base}/${lang}/column/`} class="hover:text-sage-600">{t(lang, 'nav.column')}</a>
-        <span class="mx-2">/</span>
-        <span class="text-text/70">{article.data.title}</span>
+  <!-- Hero -->
+  <div class="bg-gradient-to-b from-sage-50 to-cream">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+      <nav class="text-sm text-text/50 mb-6">
+        <a href={`${base}/${lang}/`} class="hover:text-sage-600 transition-colors">{t(lang, 'nav.home')}</a>
+        <span class="mx-2 text-text/30">/</span>
+        <a href={`${base}/${lang}/column/`} class="hover:text-sage-600 transition-colors">{t(lang, 'nav.column')}</a>
+        <span class="mx-2 text-text/30">/</span>
+        <span class="text-text/70 line-clamp-1">{article.data.title}</span>
       </nav>
+    </div>
 
-      <time class="text-sm text-text/40">{article.data.date}</time>
-      <h1 class="text-3xl lg:text-4xl font-bold text-text mt-2 mb-8">{article.data.title}</h1>
+    {hasImage ? (
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        {/* Hero image with overlay title */}
+        <div class="relative rounded-2xl overflow-hidden shadow-lg">
+          <img
+            src={article.data.image}
+            alt={article.data.title}
+            class="w-full h-64 sm:h-80 lg:h-96 object-cover"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-sage-900/80 via-sage-900/30 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+            <time class="text-xs text-white/60 font-medium tracking-wide uppercase">{formattedDate}</time>
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mt-2 leading-tight drop-shadow-md">{article.data.title}</h1>
+          </div>
+        </div>
+      </div>
+    ) : (
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 text-center">
+        <time class="text-xs text-text/40 font-medium tracking-wide uppercase">{formattedDate}</time>
+        <h1 class="text-3xl lg:text-4xl font-bold text-text mt-2 leading-tight">{article.data.title}</h1>
+      </div>
+    )}
+  </div>
 
-      <div class="prose prose-sage max-w-none prose-headings:text-text prose-p:text-text/70 prose-p:leading-relaxed prose-li:text-text/70">
+  <!-- Content body -->
+  <article class="py-12 lg:py-16">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="prose prose-sage max-w-none prose-headings:text-text prose-headings:font-bold prose-h2:text-xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-sage-100 prose-p:text-text/70 prose-p:leading-relaxed prose-li:text-text/70 prose-strong:text-text/85">
         <Content />
       </div>
 
-      <div class="mt-10">
-        <a href={`${base}/${lang}/column/`} class="text-sage-500 hover:text-sage-600 text-sm font-medium">
-          ← {t(lang, 'common.back')}
+      <!-- Back link -->
+      <div class="mt-12 pt-8 border-t border-sage-100">
+        <a href={`${base}/${lang}/column/`} class="inline-flex items-center gap-2 text-sage-500 hover:text-sage-700 text-sm font-medium transition-colors group">
+          <svg class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+          </svg>
+          {t(lang, 'common.back')}
         </a>
       </div>
     </div>

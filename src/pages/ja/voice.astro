@@ -5,46 +5,116 @@ import { getCollection, render } from 'astro:content';
 import { t } from '../../i18n/utils';
 
 const lang = 'ja';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const allTestimonials = await getCollection('testimonials');
 const testimonials = allTestimonials.filter((te) => te.data.lang === lang);
 
 const renderedTestimonials = await Promise.all(
   testimonials.map(async (te) => {
     const { Content } = await render(te);
-    return { data: te.data, Content };
+    return { data: te.data, Content, body: te.body };
   })
 );
+
+// Sort: longer testimonials first for visual interest
+const sorted = renderedTestimonials.sort((a, b) => b.body.length - a.body.length);
+
+// Map names to illustrated avatar icons from original site
+const iconMap: Record<string, string> = {
+  'T.N.': `${base}/images/voice/icons/voice_icon1.png`,
+  'K.T.': `${base}/images/voice/icons/voice_icon2.png`,
+  'M.Y.': `${base}/images/voice/icons/voice_icon3.png`,
+  'Y.S.': `${base}/images/voice/icons/voice_icon4.png`,
+  'H.M.': `${base}/images/voice/icons/voice_icon5.png`,
+  'M.K.': `${base}/images/voice/icons/voice_icon6.png`,
+  'A.K.': `${base}/images/voice/icons/voice_icon7.png`,
+  'M.T.': `${base}/images/voice/icons/voice_icon8.png`,
+  'M.S.': `${base}/images/voice/icons/voice_icon1.png`,
+};
 ---
 
 <BaseLayout title={t(lang, 'voice.title')}>
-  <section class="py-16 lg:py-24">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h1 class="text-3xl lg:text-4xl font-bold text-text mb-3">{t(lang, 'voice.title')}</h1>
-        <p class="text-text/60">{t(lang, 'voice.subtitle')}</p>
+  <!-- Hero banner -->
+  <section class="relative bg-gradient-to-br from-sage-50 via-cream to-gold-50 py-16 lg:py-20 overflow-hidden">
+    <!-- Decorative botanical elements -->
+    <div class="absolute top-0 left-0 w-64 h-64 bg-sage-200/20 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+    <div class="absolute bottom-0 right-0 w-48 h-48 bg-gold-200/20 rounded-full translate-x-1/4 translate-y-1/4"></div>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <div class="inline-flex items-center gap-2 text-sage-600 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium mb-6 border border-sage-200/50">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+        </svg>
+        受講生の声
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {renderedTestimonials.map(({ data, Content }) => (
-          <div class="bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-sage-100">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-full bg-sage-100 flex items-center justify-center text-sage-600 font-bold text-sm">
-                {data.name.charAt(0)}
-              </div>
-              <div>
-                <p class="font-medium text-text text-sm">
-                  {data.name}
-                  {data.age && <span class="text-text/50 font-normal"> ({data.age})</span>}
-                </p>
-                {data.occupation && <p class="text-xs text-text/50">{data.occupation}</p>}
-              </div>
-            </div>
-            <span class="inline-block text-xs font-medium text-gold-600 bg-gold-50 px-2.5 py-1 rounded-full mb-3">{data.course}</span>
-            <div class="text-sm text-text/70 leading-relaxed">
-              <Content />
-            </div>
+      <h1 class="text-3xl lg:text-4xl font-bold text-text mb-3">{t(lang, 'voice.title')}</h1>
+      <p class="text-text/55 max-w-xl mx-auto">{t(lang, 'voice.subtitle')}</p>
+    </div>
+  </section>
+
+  <!-- Feature images from original site -->
+  <section class="bg-white border-b border-sage-100">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="text-center">
+          <div class="rounded-2xl overflow-hidden mb-4 shadow-sm">
+            <img src={`${base}/images/voice/feature1.png`} alt="教室の雰囲気" class="w-full h-48 object-cover" />
+          </div>
+          <h3 class="font-semibold text-text text-sm mb-1">温かい学習環境</h3>
+          <p class="text-xs text-text/50">あなたのペースに合わせたマンツーマン指導</p>
+        </div>
+        <div class="text-center">
+          <div class="rounded-2xl overflow-hidden mb-4 shadow-sm">
+            <img src={`${base}/images/voice/feature2.png`} alt="実習" class="w-full h-48 object-cover" />
+          </div>
+          <h3 class="font-semibold text-text text-sm mb-1">実践的な学び</h3>
+          <p class="text-xs text-text/50">ハーブやエッセンシャルオイルに直接触れて学ぶ</p>
+        </div>
+        <div class="text-center">
+          <div class="rounded-2xl overflow-hidden mb-4 shadow-sm">
+            <img src={`${base}/images/voice/feature3.png`} alt="資格取得" class="w-full h-48 object-cover" />
+          </div>
+          <h3 class="font-semibold text-text text-sm mb-1">高い合格率</h3>
+          <p class="text-xs text-text/50">充実した試験対策サポート</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials grid -->
+  <section class="py-14 lg:py-20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="columns-1 md:columns-2 gap-6 space-y-6">
+        {sorted.map(({ data, body }) => (
+          <div class="break-inside-avoid">
+            <TestimonialCard
+              name={data.name}
+              age={data.age}
+              occupation={data.occupation}
+              course={data.course}
+              content={body}
+              icon={iconMap[data.name]}
+            />
           </div>
         ))}
       </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-12 bg-sage-50 border-t border-sage-100">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-xl font-bold text-text mb-3">あなたも始めてみませんか？</h2>
+      <p class="text-sm text-text/55 mb-6">ハーブ療法を学ぶ仲間に加わりましょう。</p>
+      <a
+        href={`${base}/${lang}/contact/`}
+        class="inline-flex items-center gap-2 px-6 py-3 bg-sage-600 text-white font-semibold rounded-xl hover:bg-sage-700 transition-colors text-sm"
+      >
+        お問い合わせ
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+        </svg>
+      </a>
     </div>
   </section>
 </BaseLayout>

@@ -5,24 +5,41 @@ interface Props {
   occupation?: string;
   course: string;
   content: string;
+  icon?: string;
 }
 
-const { name, age, occupation, course, content } = Astro.props;
+const { name, age, occupation, course, content, icon } = Astro.props;
 ---
 
-<div class="bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-sage-100">
-  <div class="flex items-center gap-3 mb-4">
-    <div class="w-10 h-10 rounded-full bg-sage-100 flex items-center justify-center text-sage-600 font-bold text-sm">
-      {name.charAt(0)}
-    </div>
+<div class="testimonial-card relative bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-sage-100 hover:shadow-md transition-shadow duration-300">
+  <!-- Decorative quote mark -->
+  <svg class="absolute top-4 right-5 w-10 h-10 text-sage-100 opacity-60" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609L9.978 5.151c-2.432.917-3.995 3.638-3.995 5.849H10v10H0z" />
+  </svg>
+
+  <!-- Portrait + name at top -->
+  <div class="flex items-center gap-3 mb-5">
+    {icon ? (
+      <img src={icon} alt="" class="w-12 h-12 rounded-full shrink-0" />
+    ) : (
+      <div class="w-12 h-12 rounded-full bg-gradient-to-br from-sage-200 to-sage-300 flex items-center justify-center text-sage-700 font-bold text-sm shrink-0">
+        {name.charAt(0)}
+      </div>
+    )}
     <div>
-      <p class="font-medium text-text text-sm">
+      <p class="font-semibold text-text text-sm">
         {name}
-        {age && <span class="text-text/50 font-normal"> ({age})</span>}
+        {age && <span class="text-text/40 font-normal text-xs ml-1">({age})</span>}
       </p>
-      {occupation && <p class="text-xs text-text/50">{occupation}</p>}
+      {occupation && <p class="text-xs text-text/45">{occupation}</p>}
     </div>
   </div>
-  <span class="inline-block text-xs font-medium text-gold-600 bg-gold-50 px-2.5 py-1 rounded-full mb-3">{course}</span>
-  <p class="text-sm text-text/70 leading-relaxed">{content}</p>
+
+  <!-- Testimonial text -->
+  <p class="text-sm text-text/75 leading-relaxed mb-5 relative z-10">{content}</p>
+
+  <!-- Course badge at bottom -->
+  <div class="border-t border-sage-100 pt-4">
+    <span class="inline-block text-xs font-medium text-gold-600 bg-gold-50 px-3 py-1.5 rounded-full border border-gold-200/50">{course}</span>
+  </div>
 </div>

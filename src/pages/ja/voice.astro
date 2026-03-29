@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TestimonialCard from '../../components/TestimonialCard.astro';
+import { getCollection, render } from 'astro:content';
+import { t } from '../../i18n/utils';
+
+const lang = 'ja';
+const allTestimonials = await getCollection('testimonials');
+const testimonials = allTestimonials.filter((te) => te.data.lang === lang);
+
+const renderedTestimonials = await Promise.all(
+  testimonials.map(async (te) => {
+    const { Content } = await render(te);
+    return { data: te.data, Content };
+  })
+);
+---
+
+<BaseLayout title={t(lang, 'voice.title')}>
+  <section class="py-16 lg:py-24">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h1 class="text-3xl lg:text-4xl font-bold text-text mb-3">{t(lang, 'voice.title')}</h1>
+        <p class="text-text/60">{t(lang, 'voice.subtitle')}</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {renderedTestimonials.map(({ data, Content }) => (
+          <div class="bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-sage-100">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-full bg-sage-100 flex items-center justify-center text-sage-600 font-bold text-sm">
+                {data.name.charAt(0)}
+              </div>
+              <div>
+                <p class="font-medium text-text text-sm">
+                  {data.name}
+                  {data.age && <span class="text-text/50 font-normal"> ({data.age})</span>}
+                </p>
+                {data.occupation && <p class="text-xs text-text/50">{data.occupation}</p>}
+              </div>
+            </div>
+            <span class="inline-block text-xs font-medium text-gold-600 bg-gold-50 px-2.5 py-1 rounded-full mb-3">{data.course}</span>
+            <div class="text-sm text-text/70 leading-relaxed">
+              <Content />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

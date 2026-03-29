@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { t } from '../../../i18n/utils';
+
+const lang = 'en';
+const base = import.meta.env.BASE_URL;
+
+export async function getStaticPaths() {
+  const allArticles = await getCollection('articles');
+  return allArticles
+    .filter((a) => a.data.lang === 'en')
+    .map((article) => ({
+      params: { slug: article.data.slug },
+      props: { article },
+    }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+---
+
+<BaseLayout title={article.data.title}>
+  <article class="py-16 lg:py-24">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="mb-8 text-sm text-text/50">
+        <a href={`${base}${lang}/`} class="hover:text-sage-600">{t(lang, 'nav.home')}</a>
+        <span class="mx-2">/</span>
+        <a href={`${base}${lang}/column/`} class="hover:text-sage-600">{t(lang, 'nav.column')}</a>
+        <span class="mx-2">/</span>
+        <span class="text-text/70">{article.data.title}</span>
+      </nav>
+
+      <time class="text-sm text-text/40">{article.data.date}</time>
+      <h1 class="text-3xl lg:text-4xl font-bold text-text mt-2 mb-8">{article.data.title}</h1>
+
+      <div class="prose prose-sage max-w-none prose-headings:text-text prose-p:text-text/70 prose-p:leading-relaxed prose-li:text-text/70">
+        <Content />
+      </div>
+
+      <div class="mt-10">
+        <a href={`${base}${lang}/column/`} class="text-sage-500 hover:text-sage-600 text-sm font-medium">
+          ← {t(lang, 'common.back')}
+        </a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

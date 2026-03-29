@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CourseCard from '../../../components/CourseCard.astro';
+import { getCollection } from 'astro:content';
+import { t } from '../../../i18n/utils';
+
+const lang = 'ja';
+const allCourses = await getCollection('courses');
+const courses = allCourses
+  .filter((c) => c.data.lang === lang)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title={t(lang, 'courses.title')}>
+  <section class="py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h1 class="text-3xl lg:text-4xl font-bold text-text mb-3">{t(lang, 'courses.title')}</h1>
+        <p class="text-text/60">{t(lang, 'courses.subtitle')}</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {courses.map((course) => (
+          <CourseCard
+            title={course.data.title}
+            description={course.data.description}
+            certification={course.data.certification}
+            price={course.data.price}
+            sessions={course.data.sessions}
+            totalHours={course.data.totalHours}
+            slug={course.data.slug}
+            image={course.data.image}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,17 @@
+---
+import { getLangFromUrl, getLocalizedUrl, languages } from '../i18n/languages';
+import { getOtherLang } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const otherLang = getOtherLang(lang);
+const otherUrl = getLocalizedUrl(Astro.url, otherLang);
+---
+
+<a
+  href={otherUrl}
+  class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full border border-sage-300 text-sage-700 hover:bg-sage-100 transition-colors"
+  aria-label={`Switch to ${languages[otherLang]}`}
+>
+  <span class="text-base">🌐</span>
+  <span>{languages[otherLang]}</span>
+</a>

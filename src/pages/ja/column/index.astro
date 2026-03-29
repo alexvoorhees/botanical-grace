@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ArticleCard from '../../../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+import { t } from '../../../i18n/utils';
+
+const lang = 'ja';
+const allArticles = await getCollection('articles');
+const articles = allArticles.filter((a) => a.data.lang === lang);
+---
+
+<BaseLayout title={t(lang, 'column.title')}>
+  <section class="py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h1 class="text-3xl lg:text-4xl font-bold text-text mb-3">{t(lang, 'column.title')}</h1>
+        <p class="text-text/60">{t(lang, 'column.subtitle')}</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {articles.map((article) => (
+          <ArticleCard
+            title={article.data.title}
+            date={article.data.date}
+            excerpt={article.data.excerpt}
+            slug={article.data.slug}
+            image={article.data.image}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

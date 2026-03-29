@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { t } from '../../../i18n/utils';
+import { render } from 'astro:content';
+
+const lang = 'ja';
+const base = import.meta.env.BASE_URL;
+
+export async function getStaticPaths() {
+  const allCourses = await getCollection('courses');
+  return allCourses
+    .filter((c) => c.data.lang === 'ja')
+    .map((course) => ({
+      params: { slug: course.data.slug },
+      props: { course },
+    }));
+}
+
+const { course } = Astro.props;
+const { Content } = await render(course);
+---
+
+<BaseLayout title={course.data.title}>
+  <article class="py-16 lg:py-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav class="mb-8 text-sm text-text/50">
+        <a href={`${base}${lang}/`} class="hover:text-sage-600">{t(lang, 'nav.home')}</a>
+        <span class="mx-2">/</span>
+        <a href={`${base}${lang}/courses/`} class="hover:text-sage-600">{t(lang, 'nav.courses')}</a>
+        <span class="mx-2">/</span>
+        <span class="text-text/70">{course.data.title}</span>
+      </nav>
+
+      <!-- Header -->
+      <div class="mb-10">
+        <span class="inline-block text-sm font-semibold text-sage-600 bg-sage-50 px-3 py-1 rounded-full mb-4">
+          {course.data.certification}
+        </span>
+        <h1 class="text-3xl lg:text-4xl font-bold text-text mb-4">{course.data.title}</h1>
+        {course.data.subtitle && <p class="text-lg text-text/60">{course.data.subtitle}</p>}
+      </div>
+
+      <!-- Course Info Box -->
+      <div class="bg-sage-50 rounded-2xl p-6 lg:p-8 mb-10 grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div>
+          <p class="text-xs text-text/50 mb-1">{t(lang, 'courses.price')}</p>
+          <p class="text-xl font-bold text-sage-700">¥{course.data.price.toLocaleString()}</p>
+          <p class="text-xs text-text/40">{t(lang, 'common.yen')}</p>
+        </div>
+        <div>
+          <p class="text-xs text-text/50 mb-1">{t(lang, 'courses.sessions')}</p>
+          <p class="text-xl font-bold text-sage-700">{course.data.sessions}<span class="text-sm font-normal">{t(lang, 'courses.sessions_unit')}</span></p>
+        </div>
+        <div>
+          <p class="text-xs text-text/50 mb-1">{t(lang, 'courses.hours')}</p>
+          <p class="text-xl font-bold text-sage-700">{course.data.totalHours}<span class="text-sm font-normal">{t(lang, 'courses.hours_unit')}</span></p>
+        </div>
+        {course.data.textbookPrice && (
+          <div>
+            <p class="text-xs text-text/50 mb-1">{lang === 'ja' ? 'テキスト代' : 'Textbook'}</p>
+            <p class="text-xl font-bold text-sage-700">¥{course.data.textbookPrice.toLocaleString()}</p>
+          </div>
+        )}
+      </div>
+
+      <!-- Course Content (Markdown) -->
+      <div class="prose prose-sage max-w-none
+        prose-headings:text-text prose-headings:font-bold
+        prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-sage-200
+        prose-h3:text-lg prose-h3:mt-6 prose-h3:mb-3
+        prose-p:text-text/70 prose-p:leading-relaxed
+        prose-li:text-text/70
+        prose-strong:text-text
+      ">
+        <Content />
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-12 text-center">
+        <a
+          href={`${base}${lang}/contact/`}
+          class="inline-flex items-center gap-2 px-8 py-4 bg-gold-400 text-sage-900 font-semibold rounded-xl hover:bg-gold-300 transition-colors text-lg"
+        >
+          {t(lang, 'nav.contact')}
+        </a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

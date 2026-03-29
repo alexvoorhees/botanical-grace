@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { t } from '../../i18n/utils';
+
+const lang = 'ja';
+const base = import.meta.env.BASE_URL;
+const allTeacher = await getCollection('teacher');
+const teacherEntry = allTeacher.find((te) => te.data.lang === lang);
+
+let Content: any = null;
+let data: any = null;
+if (teacherEntry) {
+  const rendered = await render(teacherEntry);
+  Content = rendered.Content;
+  data = teacherEntry.data;
+}
+---
+
+<BaseLayout title={t(lang, 'teacher.title')}>
+  <section class="py-16 lg:py-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h1 class="text-3xl lg:text-4xl font-bold text-text mb-3">{t(lang, 'teacher.title')}</h1>
+      </div>
+
+      {data && (
+        <div class="bg-white rounded-2xl shadow-sm border border-sage-100 overflow-hidden">
+          <div class="p-8 lg:p-12">
+            <div class="flex flex-col md:flex-row gap-8 items-start">
+              <div class="w-40 h-40 rounded-2xl bg-sage-100 flex items-center justify-center shrink-0 mx-auto md:mx-0">
+                {data.image ? (
+                  <img src={data.image} alt={data.name} class="w-full h-full object-cover rounded-2xl" />
+                ) : (
+                  <span class="text-5xl">👩‍🏫</span>
+                )}
+              </div>
+              <div>
+                <h2 class="text-2xl font-bold text-text mb-1">{data.name}</h2>
+                <p class="text-sage-600 font-medium mb-4">{data.title}</p>
+                <div class="flex flex-wrap gap-2">
+                  {data.credentials.map((cred: string) => (
+                    <span class="text-xs bg-sage-50 text-sage-600 px-3 py-1.5 rounded-full">{cred}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8 prose prose-sage max-w-none prose-headings:text-text prose-p:text-text/70 prose-p:leading-relaxed">
+              {Content && <Content />}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div class="mt-12 text-center">
+        <a
+          href={`${base}${lang}/contact/`}
+          class="inline-flex items-center gap-2 px-8 py-4 bg-gold-400 text-sage-900 font-semibold rounded-xl hover:bg-gold-300 transition-colors"
+        >
+          {t(lang, 'nav.contact')}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

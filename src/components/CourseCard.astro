@@ -1,0 +1,47 @@
+---
+import { getLangFromUrl } from '../i18n/languages';
+import { t } from '../i18n/utils';
+
+interface Props {
+  title: string;
+  description: string;
+  certification: string;
+  price: number;
+  sessions: number;
+  totalHours: number;
+  slug: string;
+  image?: string;
+}
+
+const lang = getLangFromUrl(Astro.url);
+const base = import.meta.env.BASE_URL;
+const { title, description, certification, price, sessions, totalHours, slug, image } = Astro.props;
+---
+
+<a
+  href={`${base}${lang}/courses/${slug}/`}
+  class="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-sage-100"
+>
+  <div class="aspect-[16/10] bg-sage-100 overflow-hidden">
+    {image ? (
+      <img src={image} alt={title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+    ) : (
+      <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-sage-100 to-sage-200">
+        <span class="text-4xl">🌿</span>
+      </div>
+    )}
+  </div>
+  <div class="p-5 lg:p-6">
+    <span class="inline-block text-xs font-semibold text-sage-600 bg-sage-50 px-2.5 py-1 rounded-full mb-3">
+      {certification}
+    </span>
+    <h3 class="text-lg font-bold text-text group-hover:text-sage-600 transition-colors mb-2">
+      {title}
+    </h3>
+    <p class="text-sm text-text/60 mb-4 line-clamp-2">{description}</p>
+    <div class="flex items-center gap-4 text-sm text-text/50">
+      <span>{t(lang, 'courses.price')}: ¥{price.toLocaleString()}</span>
+      <span>{totalHours}{t(lang, 'courses.hours_unit')}</span>
+    </div>
+  </div>
+</a>

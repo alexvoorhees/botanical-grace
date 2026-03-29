@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { t } from '../../i18n/utils';
+
+const lang = 'ja';
+---
+
+<BaseLayout title={t(lang, 'contact.title')}>
+  <section class="py-16 lg:py-24">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h1 class="text-3xl lg:text-4xl font-bold text-text mb-3">{t(lang, 'contact.title')}</h1>
+        <p class="text-text/60">{t(lang, 'contact.subtitle')}</p>
+      </div>
+
+      <!-- Phone -->
+      <div class="bg-sage-50 rounded-2xl p-6 text-center mb-10">
+        <p class="text-sm text-text/60 mb-2">{t(lang, 'contact.phone_label')}</p>
+        <a href="tel:070-1581-0168" class="text-2xl font-bold text-sage-700 hover:text-sage-600">
+          {t(lang, 'footer.phone')}
+        </a>
+      </div>
+
+      <!-- Form -->
+      <form
+        action="https://formspree.io/f/placeholder"
+        method="POST"
+        class="bg-white rounded-2xl shadow-sm border border-sage-100 p-6 lg:p-10 space-y-6"
+      >
+        <div>
+          <label for="name" class="block text-sm font-medium text-text mb-2">{t(lang, 'contact.name')}</label>
+          <input
+            type="text" id="name" name="name" required
+            class="w-full px-4 py-3 rounded-xl border border-sage-200 focus:ring-2 focus:ring-sage-400 focus:border-sage-400 outline-none transition-colors bg-cream"
+          />
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium text-text mb-2">{t(lang, 'contact.email')}</label>
+          <input
+            type="email" id="email" name="email" required
+            class="w-full px-4 py-3 rounded-xl border border-sage-200 focus:ring-2 focus:ring-sage-400 focus:border-sage-400 outline-none transition-colors bg-cream"
+          />
+        </div>
+        <div>
+          <label for="phone" class="block text-sm font-medium text-text mb-2">{t(lang, 'contact.phone')}</label>
+          <input
+            type="tel" id="phone" name="phone"
+            class="w-full px-4 py-3 rounded-xl border border-sage-200 focus:ring-2 focus:ring-sage-400 focus:border-sage-400 outline-none transition-colors bg-cream"
+          />
+        </div>
+        <div>
+          <label for="course" class="block text-sm font-medium text-text mb-2">{t(lang, 'contact.course')}</label>
+          <select
+            id="course" name="course"
+            class="w-full px-4 py-3 rounded-xl border border-sage-200 focus:ring-2 focus:ring-sage-400 focus:border-sage-400 outline-none transition-colors bg-cream"
+          >
+            <option value="">選択してください</option>
+            <option value="herbal-therapist">JAMHA認定ハーバルセラピスト</option>
+            <option value="medical-herb">メディカルハーブコーディネーター</option>
+            <option value="herb-life">ハーブ＆ライフコーディネーター</option>
+            <option value="aromatherapy">AEAJ認定アロマテラピーアドバイザー</option>
+            <option value="phytochemicals">フィトケミカル植物療法</option>
+            <option value="soup">野菜のスープ・スムージー講座</option>
+            <option value="other">その他</option>
+          </select>
+        </div>
+        <div>
+          <label for="message" class="block text-sm font-medium text-text mb-2">{t(lang, 'contact.message')}</label>
+          <textarea
+            id="message" name="message" rows="5" required
+            class="w-full px-4 py-3 rounded-xl border border-sage-200 focus:ring-2 focus:ring-sage-400 focus:border-sage-400 outline-none transition-colors bg-cream resize-y"
+          ></textarea>
+        </div>
+        <!-- Honeypot -->
+        <input type="text" name="_gotcha" class="hidden" />
+        <button
+          type="submit"
+          class="w-full py-4 bg-gold-400 text-sage-900 font-semibold rounded-xl hover:bg-gold-300 transition-colors text-lg"
+        >
+          {t(lang, 'contact.submit')}
+        </button>
+      </form>
+
+      <!-- Address -->
+      <div class="mt-10 text-center text-sm text-text/50">
+        <p>{t(lang, 'footer.address')}</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,28 @@
+---
+interface Props {
+  name: string;
+  age?: string;
+  occupation?: string;
+  course: string;
+  content: string;
+}
+
+const { name, age, occupation, course, content } = Astro.props;
+---
+
+<div class="bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-sage-100">
+  <div class="flex items-center gap-3 mb-4">
+    <div class="w-10 h-10 rounded-full bg-sage-100 flex items-center justify-center text-sage-600 font-bold text-sm">
+      {name.charAt(0)}
+    </div>
+    <div>
+      <p class="font-medium text-text text-sm">
+        {name}
+        {age && <span class="text-text/50 font-normal"> ({age})</span>}
+      </p>
+      {occupation && <p class="text-xs text-text/50">{occupation}</p>}
+    </div>
+  </div>
+  <span class="inline-block text-xs font-medium text-gold-600 bg-gold-50 px-2.5 py-1 rounded-full mb-3">{course}</span>
+  <p class="text-sm text-text/70 leading-relaxed">{content}</p>
+</div>

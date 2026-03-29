@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { t } from '../../i18n/utils';
+
+const lang = 'ja';
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title={t(lang, 'corporate.title')}>
+  <section class="py-16 lg:py-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h1 class="text-3xl lg:text-4xl font-bold text-text mb-3">{t(lang, 'corporate.title')}</h1>
+        <p class="text-text/60">{t(lang, 'corporate.subtitle')}</p>
+      </div>
+
+      <div class="space-y-8">
+        <div class="bg-white rounded-2xl shadow-sm border border-sage-100 p-6 lg:p-10">
+          <h2 class="text-xl font-bold text-text mb-4">法人・団体様向けプログラム</h2>
+          <p class="text-text/70 leading-relaxed mb-6">
+            BOTANICAL GRACE 8では、企業・団体様向けのグループ研修プログラムをご提供しています。
+            社員の健康増進やウェルネスプログラムの一環として、ハーブやアロマテラピーの知識を学ぶ機会をご提供いたします。
+          </p>
+
+          <div class="bg-sage-50 rounded-xl p-6 mb-6">
+            <h3 class="font-bold text-text mb-3">グループ割引</h3>
+            <p class="text-text/70">3名様以上でお申込みの場合、お一人様 <strong class="text-sage-700">¥88,800</strong>（税込）にてご受講いただけます。</p>
+          </div>
+
+          <h3 class="font-bold text-text mb-3">プログラム内容</h3>
+          <ul class="space-y-2 text-text/70">
+            <li class="flex items-start gap-2">
+              <span class="text-sage-500 mt-1">•</span>
+              <span>ハーブ＆アロマテラピーの基礎知識</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-sage-500 mt-1">•</span>
+              <span>ストレスマネジメントとリラクゼーション</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-sage-500 mt-1">•</span>
+              <span>セルフケアとウェルネス</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-sage-500 mt-1">•</span>
+              <span>資格取得を目指すプログラム</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="text-center">
+          <a
+            href={`${base}${lang}/contact/`}
+            class="inline-flex items-center gap-2 px-8 py-4 bg-gold-400 text-sage-900 font-semibold rounded-xl hover:bg-gold-300 transition-colors text-lg"
+          >
+            {t(lang, 'nav.contact')}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -7,6 +7,7 @@ actions:
   - "消化促進"
   - "駆風"
   - "母乳分泌促進"
+image: "/Kimiko_Site/images/herbs/fennel.png"
 lang: "ja"
 slug: "fennel"
 ---

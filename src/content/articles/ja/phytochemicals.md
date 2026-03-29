@@ -2,6 +2,7 @@
 title: "フィトケミカルについて"
 date: "2022-05-10"
 excerpt: "植物由来の化学物質フィトケミカルの基礎知識と、健康・美容への活用について解説します。"
+image: "/Kimiko_Site/images/articles/phytochemicals.png"
 lang: "ja"
 slug: "phytochemicals"
 ---

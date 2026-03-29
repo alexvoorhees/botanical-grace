@@ -7,6 +7,7 @@ actions:
   - "Metabolism Boost"
   - "Antioxidant"
   - "Diuretic"
+image: "/Kimiko_Site/images/herbs/hibiscus.png"
 lang: "en"
 slug: "hibiscus"
 ---

@@ -7,6 +7,7 @@ actions:
   - "Sedative"
   - "Anxiolytic"
   - "Sleep Aid"
+image: "/Kimiko_Site/images/herbs/passionflower.png"
 lang: "en"
 slug: "passionflower"
 ---

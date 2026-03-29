@@ -7,6 +7,7 @@ actions:
   - "創傷治癒"
   - "抗炎症"
   - "皮膚保護"
+image: "/Kimiko_Site/images/herbs/calendula.png"
 lang: "ja"
 slug: "calendula"
 ---

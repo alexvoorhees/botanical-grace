@@ -2,6 +2,7 @@
 title: "Herbal Tea Basics: How to Brew the Perfect Cup"
 date: "2024-03-05"
 excerpt: "Tips for brewing delicious herbal tea and choosing the right herbs for your needs."
+image: "/Kimiko_Site/images/articles/herbal-tea-basics.png"
 lang: "en"
 slug: "herbal-tea-basics"
 ---

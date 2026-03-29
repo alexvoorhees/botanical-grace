@@ -7,6 +7,7 @@ actions:
   - "抗うつ"
   - "鎮静"
   - "抗ウイルス"
+image: "/Kimiko_Site/images/herbs/st-johns-wort.png"
 lang: "ja"
 slug: "st-johns-wort"
 ---

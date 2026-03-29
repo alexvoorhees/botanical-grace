@@ -2,6 +2,7 @@
 title: "ポリフェノールの種類と健康効果"
 date: "2024-02-10"
 excerpt: "植物に含まれるポリフェノールの種類と、私たちの健康にもたらす効果について解説します。"
+image: "/Kimiko_Site/images/articles/polyphenols.png"
 lang: "ja"
 slug: "polyphenols"
 ---

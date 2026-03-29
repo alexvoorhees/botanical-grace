@@ -7,6 +7,7 @@ actions:
   - "粘膜保護"
   - "鎮咳"
   - "消炎"
+image: "/Kimiko_Site/images/herbs/mallow.png"
 lang: "ja"
 slug: "mallow"
 ---

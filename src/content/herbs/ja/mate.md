@@ -7,6 +7,7 @@ actions:
   - "覚醒"
   - "利尿"
   - "代謝促進"
+image: "/Kimiko_Site/images/herbs/mate.png"
 lang: "ja"
 slug: "mate"
 ---

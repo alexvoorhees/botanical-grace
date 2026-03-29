@@ -7,6 +7,7 @@ actions:
   - "代謝促進"
   - "抗酸化"
   - "利尿"
+image: "/Kimiko_Site/images/herbs/hibiscus.png"
 lang: "ja"
 slug: "hibiscus"
 ---

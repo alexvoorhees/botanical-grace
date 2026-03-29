@@ -2,6 +2,7 @@
 title: "Minerals: Types and Functions in the Human Body"
 date: "2022-12-24"
 excerpt: "An overview of essential minerals, their roles in the body, and why dietary intake matters."
+image: "/Kimiko_Site/images/articles/minerals.png"
 lang: "en"
 slug: "minerals"
 ---

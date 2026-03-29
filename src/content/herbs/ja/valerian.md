@@ -7,6 +7,7 @@ actions:
   - "鎮静"
   - "睡眠改善"
   - "抗痙攣"
+image: "/Kimiko_Site/images/herbs/valerian.png"
 lang: "ja"
 slug: "valerian"
 ---

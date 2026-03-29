@@ -7,6 +7,7 @@ actions:
   - "Immune Boosting"
   - "Antiviral"
   - "Antibacterial"
+image: "/Kimiko_Site/images/herbs/echinacea.png"
 lang: "en"
 slug: "echinacea"
 ---

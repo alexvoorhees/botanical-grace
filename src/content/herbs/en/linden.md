@@ -7,6 +7,7 @@ actions:
   - "Sedative"
   - "Diaphoretic"
   - "Diuretic"
+image: "/Kimiko_Site/images/herbs/linden.png"
 lang: "en"
 slug: "linden"
 ---

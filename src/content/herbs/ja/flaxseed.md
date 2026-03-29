@@ -7,6 +7,7 @@ actions:
   - "緩下"
   - "抗炎症"
   - "コレステロール低下"
+image: "/Kimiko_Site/images/herbs/flaxseed.png"
 lang: "ja"
 slug: "flaxseed"
 ---

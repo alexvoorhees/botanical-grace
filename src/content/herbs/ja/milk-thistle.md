@@ -7,6 +7,7 @@ actions:
   - "肝臓保護"
   - "抗酸化"
   - "解毒"
+image: "/Kimiko_Site/images/herbs/milk-thistle.png"
 lang: "ja"
 slug: "milk-thistle"
 ---

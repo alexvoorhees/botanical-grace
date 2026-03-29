@@ -2,6 +2,7 @@
 title: "Types and Functions of Vitamins"
 date: "2024-01-15"
 excerpt: "An overview of vitamin types and their roles in the body. Essential knowledge for a balanced diet."
+image: "/Kimiko_Site/images/articles/vitamin-functions.png"
 lang: "en"
 slug: "vitamin-functions"
 ---

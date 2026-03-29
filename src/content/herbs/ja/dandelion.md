@@ -7,6 +7,7 @@ actions:
   - "利尿"
   - "肝臓保護"
   - "消化促進"
+image: "/Kimiko_Site/images/herbs/dandelion.png"
 lang: "ja"
 slug: "dandelion"
 ---

@@ -7,6 +7,7 @@ actions:
   - "Diuretic"
   - "Liver Support"
   - "Digestive Aid"
+image: "/Kimiko_Site/images/herbs/dandelion.png"
 lang: "en"
 slug: "dandelion"
 ---

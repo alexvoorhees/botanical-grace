@@ -7,6 +7,7 @@ actions:
   - "抗アレルギー"
   - "利尿"
   - "浄血"
+image: "/Kimiko_Site/images/herbs/nettle.png"
 lang: "ja"
 slug: "nettle"
 ---

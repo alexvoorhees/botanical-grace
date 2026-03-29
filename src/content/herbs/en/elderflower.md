@@ -7,6 +7,7 @@ actions:
   - "Diaphoretic"
   - "Diuretic"
   - "Anti-catarrhal"
+image: "/Kimiko_Site/images/herbs/elderflower.png"
 lang: "en"
 slug: "elderflower"
 ---

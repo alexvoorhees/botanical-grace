@@ -7,6 +7,7 @@ actions:
   - "Prostate Support"
   - "Anti-inflammatory"
   - "Hormone Balance"
+image: "/Kimiko_Site/images/herbs/saw-palmetto.png"
 lang: "en"
 slug: "saw-palmetto"
 ---

@@ -7,6 +7,7 @@ actions:
   - "肝臓保護"
   - "消化促進"
   - "コレステロール低下"
+image: "/Kimiko_Site/images/herbs/artichoke.png"
 lang: "ja"
 slug: "artichoke"
 ---

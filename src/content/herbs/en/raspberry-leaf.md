@@ -7,6 +7,7 @@ actions:
   - "Uterine Tonic"
   - "Astringent"
   - "Nutritive"
+image: "/Kimiko_Site/images/herbs/raspberry-leaf.png"
 lang: "en"
 slug: "raspberry-leaf"
 ---

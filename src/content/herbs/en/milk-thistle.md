@@ -7,6 +7,7 @@ actions:
   - "Liver Protection"
   - "Antioxidant"
   - "Detoxification"
+image: "/Kimiko_Site/images/herbs/milk-thistle.png"
 lang: "en"
 slug: "milk-thistle"
 ---

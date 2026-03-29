@@ -7,6 +7,7 @@ actions:
   - "Hormone Balance"
   - "Anti-inflammatory"
   - "Skin Health"
+image: "/Kimiko_Site/images/herbs/evening-primrose.png"
 lang: "en"
 slug: "evening-primrose"
 ---

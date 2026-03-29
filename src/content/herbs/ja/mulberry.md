@@ -7,6 +7,7 @@ actions:
   - "血糖調整"
   - "抗酸化"
   - "滋養"
+image: "/Kimiko_Site/images/herbs/mulberry.png"
 lang: "ja"
 slug: "mulberry"
 ---

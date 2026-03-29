@@ -7,6 +7,7 @@ actions:
   - "ホルモン調整"
   - "抗炎症"
   - "皮膚保護"
+image: "/Kimiko_Site/images/herbs/evening-primrose.png"
 lang: "ja"
 slug: "evening-primrose"
 ---

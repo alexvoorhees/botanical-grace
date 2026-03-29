@@ -7,16 +7,27 @@ export const languages = {
 
 export type Lang = keyof typeof languages;
 
+function stripBase(pathname: string): string {
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  if (base && pathname.startsWith(base)) {
+    return pathname.slice(base.length) || '/';
+  }
+  return pathname;
+}
+
 export function getLangFromUrl(url: URL): Lang {
-  const [, lang] = url.pathname.split('/');
+  const path = stripBase(url.pathname);
+  const [, lang] = path.split('/');
   if (lang in languages) return lang as Lang;
   return defaultLang;
 }
 
 export function getLocalizedUrl(url: URL, targetLang: Lang): string {
-  const [, currentLang, ...rest] = url.pathname.split('/');
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  const path = stripBase(url.pathname);
+  const [, currentLang, ...rest] = path.split('/');
   if (currentLang in languages) {
-    return `/${targetLang}/${rest.join('/')}`;
+    return `${base}/${targetLang}/${rest.join('/')}`;
   }
-  return `/${targetLang}/`;
+  return `${base}/${targetLang}/`;
 }

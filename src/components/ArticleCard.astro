@@ -11,12 +11,12 @@ interface Props {
 }
 
 const lang = getLangFromUrl(Astro.url);
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const { title, date, excerpt, slug, image } = Astro.props;
 ---
 
 <a
-  href={`${base}${lang}/column/${slug}/`}
+  href={`${base}/${lang}/column/${slug}/`}
   class="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-sage-100"
 >
   <div class="aspect-[16/9] bg-sage-50 overflow-hidden">

@@ -3,7 +3,7 @@ import { getLangFromUrl } from '../i18n/languages';
 import { t } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <footer class="bg-sage-800 text-sage-100">
@@ -21,10 +21,10 @@ const base = import.meta.env.BASE_URL;
           {t(lang, 'nav.courses')}
         </h4>
         <ul class="space-y-2 text-sm">
-          <li><a href={`${base}${lang}/courses/`} class="text-sage-300 hover:text-white transition-colors">{t(lang, 'nav.courses')}</a></li>
-          <li><a href={`${base}${lang}/herbs/`} class="text-sage-300 hover:text-white transition-colors">{t(lang, 'nav.herbs')}</a></li>
-          <li><a href={`${base}${lang}/voice/`} class="text-sage-300 hover:text-white transition-colors">{t(lang, 'nav.voice')}</a></li>
-          <li><a href={`${base}${lang}/column/`} class="text-sage-300 hover:text-white transition-colors">{t(lang, 'nav.column')}</a></li>
+          <li><a href={`${base}/${lang}/courses/`} class="text-sage-300 hover:text-white transition-colors">{t(lang, 'nav.courses')}</a></li>
+          <li><a href={`${base}/${lang}/herbs/`} class="text-sage-300 hover:text-white transition-colors">{t(lang, 'nav.herbs')}</a></li>
+          <li><a href={`${base}/${lang}/voice/`} class="text-sage-300 hover:text-white transition-colors">{t(lang, 'nav.voice')}</a></li>
+          <li><a href={`${base}/${lang}/column/`} class="text-sage-300 hover:text-white transition-colors">{t(lang, 'nav.column')}</a></li>
           <li><a href="https://bg8s.theshop.jp/" target="_blank" rel="noopener noreferrer" class="text-sage-300 hover:text-white transition-colors">{t(lang, 'footer.shop')}</a></li>
         </ul>
       </div>
@@ -42,7 +42,7 @@ const base = import.meta.env.BASE_URL;
             </a>
           </p>
           <a
-            href={`${base}${lang}/contact/`}
+            href={`${base}/${lang}/contact/`}
             class="inline-block mt-2 px-5 py-2 bg-gold-400 text-sage-900 font-medium rounded-lg hover:bg-gold-300 transition-colors text-sm"
           >
             {t(lang, 'nav.contact')}

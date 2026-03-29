@@ -6,7 +6,7 @@ import { getCollection } from 'astro:content';
 import { t } from '../../i18n/utils';
 
 const lang = 'ja';
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const allCourses = await getCollection('courses');
 const courses = allCourses
@@ -35,13 +35,13 @@ const articles = allArticles.filter((a) => a.data.lang === lang).slice(0, 3);
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a
-          href={`${base}${lang}/courses/`}
+          href={`${base}/${lang}/courses/`}
           class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-sage-600 text-white font-semibold rounded-xl hover:bg-sage-700 transition-colors text-lg"
         >
           {t(lang, 'hero.cta')}
         </a>
         <a
-          href={`${base}${lang}/contact/`}
+          href={`${base}/${lang}/contact/`}
           class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-sage-700 font-semibold rounded-xl border-2 border-sage-200 hover:border-sage-300 hover:bg-sage-50 transition-colors text-lg"
         >
           {t(lang, 'hero.contact')}
@@ -126,7 +126,7 @@ const articles = allArticles.filter((a) => a.data.lang === lang).slice(0, 3);
       <h2 class="text-3xl font-bold mb-4">ハーブの世界への第一歩</h2>
       <p class="text-sage-200 mb-8 text-lg">無料説明会を開催しています。お気軽にお問合せください。</p>
       <a
-        href={`${base}${lang}/contact/`}
+        href={`${base}/${lang}/contact/`}
         class="inline-flex items-center gap-2 px-8 py-4 bg-gold-400 text-sage-900 font-semibold rounded-xl hover:bg-gold-300 transition-colors text-lg"
       >
         {t(lang, 'nav.contact')}

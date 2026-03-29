@@ -5,7 +5,7 @@ import { t } from '../../../i18n/utils';
 import { render } from 'astro:content';
 
 const lang = 'ja';
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 export async function getStaticPaths() {
   const allCourses = await getCollection('courses');
@@ -26,9 +26,9 @@ const { Content } = await render(course);
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Breadcrumb -->
       <nav class="mb-8 text-sm text-text/50">
-        <a href={`${base}${lang}/`} class="hover:text-sage-600">{t(lang, 'nav.home')}</a>
+        <a href={`${base}/${lang}/`} class="hover:text-sage-600">{t(lang, 'nav.home')}</a>
         <span class="mx-2">/</span>
-        <a href={`${base}${lang}/courses/`} class="hover:text-sage-600">{t(lang, 'nav.courses')}</a>
+        <a href={`${base}/${lang}/courses/`} class="hover:text-sage-600">{t(lang, 'nav.courses')}</a>
         <span class="mx-2">/</span>
         <span class="text-text/70">{course.data.title}</span>
       </nav>
@@ -80,7 +80,7 @@ const { Content } = await render(course);
       <!-- CTA -->
       <div class="mt-12 text-center">
         <a
-          href={`${base}${lang}/contact/`}
+          href={`${base}/${lang}/contact/`}
           class="inline-flex items-center gap-2 px-8 py-4 bg-gold-400 text-sage-900 font-semibold rounded-xl hover:bg-gold-300 transition-colors text-lg"
         >
           {t(lang, 'nav.contact')}

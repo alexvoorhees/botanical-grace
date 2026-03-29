@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create:*)",
+      "Bash(cp -r \"C:/Users/alexk/Desktop/Kimiko_Temp/\"* \"C:/Users/alexk/Desktop/Kimiko_Site/\")",
+      "Bash(cp \"C:/Users/alexk/Desktop/Kimiko_Temp/.gitignore\" \"C:/Users/alexk/Desktop/Kimiko_Site/\")",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321/Kimiko_Site/ja/)",
+      "Bash(npm run:*)",
+      "Bash(curl -s http://localhost:4322/Kimiko_Site/ja/index.html)",
+      "Bash(gh auth:*)",
+      "Bash(gh repo:*)",
+      "Bash(find . -name \"*.astro\" -exec grep -l 'const base = import.meta.env.BASE_URL;' {})"
+    ]
+  }
+}

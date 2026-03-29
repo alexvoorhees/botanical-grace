@@ -2,6 +2,7 @@
 title: "栄養素の種類と働きについて"
 date: "2022-05-10"
 excerpt: "3大栄養素から7大栄養素まで、それぞれの種類と体内での働きを解説します。"
+image: "/Kimiko_Site/images/articles/nutrition-types.png"
 lang: "ja"
 slug: "nutrition-types"
 ---

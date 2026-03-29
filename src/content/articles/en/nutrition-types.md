@@ -2,6 +2,7 @@
 title: "Types of Nutrients and Their Functions"
 date: "2022-05-10"
 excerpt: "From the 3 major nutrients to the 7 essential nutrient groups — understanding what fuels our body."
+image: "/Kimiko_Site/images/articles/nutrition-types.png"
 lang: "en"
 slug: "nutrition-types"
 ---

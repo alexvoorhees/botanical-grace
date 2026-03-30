@@ -85,6 +85,20 @@ const I18N = {
     translationStillRunning: 'まだ翻訳中です。GitHub Actionsでステータスを確認してください。',
     saveFirstRequired: '先にエントリーを保存してください。',
     creatingLangVersion: '{lang}版を新規作成します。内容を入力して保存してください。',
+    viewOnSite: 'サイトで見る',
+    unsavedChanges: '保存されていない変更があります。このまま移動しますか？',
+    // Markdown toolbar
+    mdBold: '太字',
+    mdItalic: '斜体',
+    mdH2: '見出し2',
+    mdH3: '見出し3',
+    mdList: 'リスト',
+    mdLink: 'リンク',
+    mdBoldPlaceholder: '太字テキスト',
+    mdItalicPlaceholder: '斜体テキスト',
+    mdHeadingPlaceholder: '見出し',
+    mdListPlaceholder: 'リスト項目',
+    mdLinkText: 'リンクテキスト',
     // Field labels
     fieldTitle: 'タイトル',
     fieldSlug: 'スラッグ',
@@ -174,6 +188,19 @@ const I18N = {
     translationStillRunning: 'Still translating. Check GitHub Actions for status.',
     saveFirstRequired: 'Please save the entry first.',
     creatingLangVersion: 'Creating new {lang} version. Enter content and save.',
+    viewOnSite: 'View on site',
+    unsavedChanges: 'You have unsaved changes. Leave anyway?',
+    mdBold: 'Bold',
+    mdItalic: 'Italic',
+    mdH2: 'Heading 2',
+    mdH3: 'Heading 3',
+    mdList: 'List',
+    mdLink: 'Link',
+    mdBoldPlaceholder: 'bold text',
+    mdItalicPlaceholder: 'italic text',
+    mdHeadingPlaceholder: 'Heading',
+    mdListPlaceholder: 'List item',
+    mdLinkText: 'link text',
     fieldTitle: 'Title',
     fieldSlug: 'Slug',
     fieldLang: 'Language',
@@ -226,7 +253,24 @@ const ICONS = {
   back: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>',
   logout: '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>',
   plus: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>',
+  externalLink: '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>',
 };
+
+// --- Unsaved changes tracking ---
+let formDirty = false;
+
+function markDirty() { formDirty = true; }
+function clearDirty() { formDirty = false; }
+
+function confirmLeave() {
+  if (!formDirty) return true;
+  return confirm(t('unsavedChanges'));
+}
+
+// Warn on tab close/refresh
+window.addEventListener('beforeunload', (e) => {
+  if (formDirty) { e.preventDefault(); }
+});
 
 // --- Login ---
 
@@ -304,9 +348,22 @@ function logout() {
 
 // --- Router ---
 
+let previousHash = '';
+
 function route() {
   const hash = location.hash.slice(1) || '';
   const parts = hash.split('/');
+
+  // Check for unsaved changes when navigating away from editor
+  if (formDirty && previousHash !== hash) {
+    if (!confirm(t('unsavedChanges'))) {
+      // Restore the previous hash without triggering another hashchange
+      history.replaceState(null, '', '#' + previousHash);
+      return;
+    }
+    clearDirty();
+  }
+  previousHash = hash;
 
   document.querySelectorAll('.nav-item').forEach(el => {
     el.classList.toggle('active', el.dataset.collection === parts[0]);
@@ -634,10 +691,18 @@ async function renderEditor(collection, lang, slug) {
       ${t('creatingLangVersion').replace('{lang}', lang === 'ja' ? t('langJa') : t('langEn'))}
     </div>` : '';
 
+  // Build "view on site" URL
+  const siteBase = 'https://alexvoorhees.github.io/botanical-grace';
+  const collectionPath = { articles: 'column', herbs: 'herbs', courses: 'courses' };
+  const viewUrl = !isNew && versionExists && slug
+    ? `${siteBase}/${lang}/${collectionPath[collection]}/${slug}/`
+    : '';
+
   main.innerHTML = `
     <div class="form-header">
       <a href="#${collection}" class="btn-back">${ICONS.back} ${t('back')}</a>
       <h2>${label}</h2>
+      ${viewUrl ? `<a href="${viewUrl}" target="_blank" class="btn-view-site">${ICONS.externalLink} ${t('viewOnSite')}</a>` : ''}
     </div>
     ${langTabs}
     ${newLangBanner}
@@ -647,6 +712,16 @@ async function renderEditor(collection, lang, slug) {
         ${renderImagePanel(collection, frontmatter)}
         <div class="form-group full">
           <label for="field-body">${t('bodyLabel')}</label>
+          <div class="md-toolbar">
+            <button type="button" class="md-btn" data-md="bold" title="${t('mdBold')}"><strong>B</strong></button>
+            <button type="button" class="md-btn" data-md="italic" title="${t('mdItalic')}"><em>I</em></button>
+            <span class="md-sep"></span>
+            <button type="button" class="md-btn" data-md="h2" title="${t('mdH2')}">H2</button>
+            <button type="button" class="md-btn" data-md="h3" title="${t('mdH3')}">H3</button>
+            <span class="md-sep"></span>
+            <button type="button" class="md-btn" data-md="ul" title="${t('mdList')}">&#8226; ${t('mdList')}</button>
+            <button type="button" class="md-btn" data-md="link" title="${t('mdLink')}">&#128279; ${t('mdLink')}</button>
+          </div>
           <textarea id="field-body" class="body-editor">${esc(body)}</textarea>
         </div>
       </div>
@@ -680,6 +755,60 @@ async function renderEditor(collection, lang, slug) {
   if (translateBtn) {
     translateBtn.addEventListener('click', () => saveAndTranslate(collection, effectiveIsNew, lang));
   }
+
+  // Markdown toolbar
+  document.querySelectorAll('.md-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const ta = document.getElementById('field-body');
+      const start = ta.selectionStart;
+      const end = ta.selectionEnd;
+      const sel = ta.value.substring(start, end);
+      let insert = '';
+      let cursorOffset = 0;
+
+      switch (btn.dataset.md) {
+        case 'bold':
+          insert = `**${sel || t('mdBoldPlaceholder')}**`;
+          cursorOffset = sel ? insert.length : 2;
+          break;
+        case 'italic':
+          insert = `*${sel || t('mdItalicPlaceholder')}*`;
+          cursorOffset = sel ? insert.length : 1;
+          break;
+        case 'h2':
+          insert = `## ${sel || t('mdHeadingPlaceholder')}`;
+          cursorOffset = sel ? insert.length : 3;
+          break;
+        case 'h3':
+          insert = `### ${sel || t('mdHeadingPlaceholder')}`;
+          cursorOffset = sel ? insert.length : 4;
+          break;
+        case 'ul':
+          insert = sel ? sel.split('\n').map(l => `- ${l}`).join('\n') : `- ${t('mdListPlaceholder')}`;
+          cursorOffset = sel ? insert.length : 2;
+          break;
+        case 'link':
+          insert = sel ? `[${sel}](url)` : `[${t('mdLinkText')}](url)`;
+          cursorOffset = sel ? insert.length - 4 : insert.indexOf('](') + 2;
+          break;
+      }
+
+      ta.focus();
+      ta.setRangeText(insert, start, end, 'end');
+      if (!sel) {
+        // Select the placeholder text
+        ta.selectionStart = start + cursorOffset;
+        ta.selectionEnd = start + insert.length - (btn.dataset.md === 'bold' ? 2 : btn.dataset.md === 'italic' ? 1 : 0);
+      }
+      markDirty();
+    });
+  });
+
+  // Track unsaved changes
+  document.querySelectorAll('.edit-form input, .edit-form textarea, .edit-form select').forEach(el => {
+    el.addEventListener('input', markDirty);
+    el.addEventListener('change', markDirty);
+  });
 
   const genBtn = document.getElementById('btn-generate-image');
   if (genBtn) {
@@ -845,6 +974,7 @@ async function saveEntryAndReturn(collection, isNew, editorLang) {
   try {
     await writeEntry(collection, lang, slug, frontmatter, body);
     toast(t('saved'), 'success');
+    clearDirty();
     delete entryCache[collection];
     loadCounts();
 

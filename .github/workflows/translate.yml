@@ -1,0 +1,91 @@
+name: Translate to English
+
+on:
+  workflow_dispatch:
+    inputs:
+      collection:
+        description: 'Collection (articles, herbs, courses)'
+        required: true
+      slug:
+        description: 'Entry slug'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read Japanese source file
+        id: source
+        run: |
+          FILE="src/content/${{ inputs.collection }}/ja/${{ inputs.slug }}.md"
+          if [ ! -f "$FILE" ]; then
+            echo "Error: Source file not found: $FILE"
+            exit 1
+          fi
+          # Store file content in env var (base64 to preserve newlines)
+          echo "content=$(base64 -w0 "$FILE")" >> "$GITHUB_OUTPUT"
+
+      - name: Translate via Venice AI
+        env:
+          VENICE_API_KEY: ${{ secrets.VENICE_API_KEY }}
+        run: |
+          SOURCE=$(echo "${{ steps.source.outputs.content }}" | base64 -d)
+
+          # Build the prompt
+          PROMPT="You are a professional Japanese-to-English translator for a botanical wellness and aromatherapy school website. Translate the following Japanese markdown file to English.
+
+Rules:
+- Translate ALL Japanese text to natural, professional English
+- Keep the YAML frontmatter structure exactly the same
+- Change the 'lang' field from 'ja' to 'en'
+- Keep the 'slug' field unchanged
+- Keep image paths, URLs, numbers, and scientific names unchanged
+- Keep markdown formatting (headers, lists, bold, etc.) intact
+- For herb names: keep both nameEn and nameJa fields as-is (they are already bilingual)
+- Translate the body content (after the second ---) as well
+- Return ONLY the translated markdown file, no explanations
+
+Here is the file to translate:
+
+$SOURCE"
+
+          # Escape for JSON
+          PROMPT_JSON=$(jq -Rs . <<< "$PROMPT")
+
+          RESPONSE=$(curl -s -X POST https://api.venice.ai/api/v1/chat/completions \
+            -H "Authorization: Bearer $VENICE_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d "{\"model\":\"llama-3.3-70b\",\"messages\":[{\"role\":\"user\",\"content\":${PROMPT_JSON}}],\"temperature\":0.3,\"max_tokens\":4096}")
+
+          # Extract the translated content
+          TRANSLATED=$(echo "$RESPONSE" | jq -r '.choices[0].message.content // empty')
+
+          if [ -z "$TRANSLATED" ]; then
+            echo "Error: Translation failed"
+            echo "$RESPONSE" | jq .
+            exit 1
+          fi
+
+          # Strip markdown code fences if the model wrapped the output
+          TRANSLATED=$(echo "$TRANSLATED" | sed '/^```\(markdown\|yaml\|md\)\?$/d')
+
+          # Write the English version
+          TARGET="src/content/${{ inputs.collection }}/en/${{ inputs.slug }}.md"
+          mkdir -p "$(dirname "$TARGET")"
+          echo "$TRANSLATED" > "$TARGET"
+
+          echo "Translation saved to: $TARGET"
+
+      - name: Commit and push translation
+        run: |
+          TARGET="src/content/${{ inputs.collection }}/en/${{ inputs.slug }}.md"
+          git config user.name "Kimiko Admin Bot"
+          git config user.email "noreply@botanicalgrace8.com"
+          git add "$TARGET"
+          git commit -m "admin: translate ${{ inputs.collection }}/ja/${{ inputs.slug }} to English"
+          git push

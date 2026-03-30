@@ -301,10 +301,10 @@ export async function triggerImageGeneration(collection, slug, prompt) {
   return true;
 }
 
-export async function pollWorkflowStatus() {
+export async function pollWorkflowStatus(workflow = 'generate-image.yml') {
   // Get the most recent workflow run
   const res = await fetch(
-    `${API}/actions/workflows/generate-image.yml/runs?per_page=1`,
+    `${API}/actions/workflows/${workflow}/runs?per_page=1`,
     { headers: headers() }
   );
 
@@ -318,4 +318,22 @@ export async function pollWorkflowStatus() {
     conclusion: run.conclusion, // success, failure, null
     url: run.html_url,
   };
+}
+
+export async function triggerTranslation(collection, slug) {
+  const res = await fetch(`${API}/actions/workflows/translate.yml/dispatches`, {
+    method: 'POST',
+    headers: { ...headers(), 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      ref: BRANCH,
+      inputs: { collection, slug },
+    }),
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || `Translation trigger failed (${res.status})`);
+  }
+
+  return true;
 }

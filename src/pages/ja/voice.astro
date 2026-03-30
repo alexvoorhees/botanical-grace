@@ -34,55 +34,16 @@ const iconMap: Record<string, string> = {
 ---
 
 <BaseLayout title={t(lang, 'voice.title')}>
-  <!-- Hero banner -->
-  <section class="relative bg-gradient-to-br from-sage-50 via-cream to-gold-50 py-16 lg:py-20 overflow-hidden">
-    <!-- Decorative botanical elements -->
-    <div class="absolute top-0 left-0 w-64 h-64 bg-sage-200/20 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
-    <div class="absolute bottom-0 right-0 w-48 h-48 bg-gold-200/20 rounded-full translate-x-1/4 translate-y-1/4"></div>
-
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-      <div class="inline-flex items-center gap-2 text-sage-600 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium mb-6 border border-sage-200/50">
-        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
-        </svg>
-        受講生の声
-      </div>
-      <h1 class="text-3xl lg:text-4xl font-bold text-text mb-3">{t(lang, 'voice.title')}</h1>
-      <p class="text-text/55 max-w-xl mx-auto">{t(lang, 'voice.subtitle')}</p>
-    </div>
-  </section>
-
-  <!-- Feature images from original site -->
-  <section class="bg-white border-b border-sage-100">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div class="text-center">
-          <div class="rounded-2xl overflow-hidden mb-4 shadow-sm">
-            <img src={`${base}/images/voice/feature1.png`} alt="教室の雰囲気" class="w-full h-48 object-cover" />
-          </div>
-          <h3 class="font-semibold text-text text-sm mb-1">温かい学習環境</h3>
-          <p class="text-xs text-text/50">あなたのペースに合わせたマンツーマン指導</p>
-        </div>
-        <div class="text-center">
-          <div class="rounded-2xl overflow-hidden mb-4 shadow-sm">
-            <img src={`${base}/images/voice/feature2.png`} alt="実習" class="w-full h-48 object-cover" />
-          </div>
-          <h3 class="font-semibold text-text text-sm mb-1">実践的な学び</h3>
-          <p class="text-xs text-text/50">ハーブやエッセンシャルオイルに直接触れて学ぶ</p>
-        </div>
-        <div class="text-center">
-          <div class="rounded-2xl overflow-hidden mb-4 shadow-sm">
-            <img src={`${base}/images/voice/feature3.png`} alt="資格取得" class="w-full h-48 object-cover" />
-          </div>
-          <h3 class="font-semibold text-text text-sm mb-1">高い合格率</h3>
-          <p class="text-xs text-text/50">充実した試験対策サポート</p>
-        </div>
-      </div>
+  <!-- Compact hero -->
+  <section class="bg-gradient-to-br from-sage-50 via-cream to-gold-50 py-10 lg:py-14">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-3xl lg:text-4xl font-bold text-text mb-2">{t(lang, 'voice.title')}</h1>
+      <p class="text-text/55">{t(lang, 'voice.subtitle')}</p>
     </div>
   </section>
 
   <!-- Testimonials grid -->
-  <section class="py-14 lg:py-20">
+  <section class="py-10 lg:py-16">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="columns-1 md:columns-2 gap-6 space-y-6">
         {sorted.map(({ data, body }) => (

@@ -53,16 +53,16 @@ const navItems = [
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16 lg:h-20">
       <!-- Logo -->
-      <a href={`${base}/${lang}/`} class="flex items-center gap-2 shrink-0">
-        <span class="text-xl lg:text-2xl font-bold text-sage-700 tracking-wide">BOTANICAL GRACE 8</span>
+      <a href={`${base}/${lang}/`} class="flex items-center shrink-0 mr-4 lg:mr-6">
+        <img src={`${base}/images/brand/logo_b.png`} alt="BOTANICAL GRACE 8" class="h-10 lg:h-12 w-auto" />
       </a>
 
       <!-- Desktop Nav -->
-      <nav class="hidden lg:flex items-center gap-1">
+      <nav class="hidden lg:flex items-center gap-0.5">
         <!-- Courses Dropdown -->
         <div class="relative group" id="courses-dropdown">
           <button
-            class="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium text-text/80 hover:text-sage-600 hover:bg-sage-50 rounded-lg transition-colors"
+            class="inline-flex items-center gap-1 px-2 py-2 text-sm font-medium text-text/80 hover:text-sage-600 hover:bg-sage-50 rounded-lg transition-colors whitespace-nowrap"
             aria-expanded="false"
             aria-haspopup="true"
           >
@@ -124,7 +124,7 @@ const navItems = [
         {navItems.map((item) => (
           <a
             href={item.href}
-            class="px-3 py-2 text-sm font-medium text-text/80 hover:text-sage-600 hover:bg-sage-50 rounded-lg transition-colors"
+            class="px-2 py-2 text-sm font-medium text-text/80 hover:text-sage-600 hover:bg-sage-50 rounded-lg transition-colors whitespace-nowrap"
           >
             {item.label}
           </a>

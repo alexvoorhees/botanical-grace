@@ -1,19 +1,45 @@
+---
+// Standalone admin page — no BaseLayout, no i18n
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
   <title>Kimiko Admin — Botanical Grace 8</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href={`${base}/admin/style.css`}>
 </head>
 <body>
+  <!-- Login Screen -->
+  <div id="login-screen">
+    <div class="login-card">
+      <h1>Kimiko Admin</h1>
+      <p class="login-subtitle">Botanical Grace 8</p>
+      <form id="login-form">
+        <div class="login-field">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" autocomplete="email" required>
+        </div>
+        <div class="login-field">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" autocomplete="current-password" required>
+        </div>
+        <div class="login-error" id="login-error"></div>
+        <button type="submit" class="login-btn" id="login-btn">Log In</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin App (hidden until login) -->
   <div id="app">
     <aside id="sidebar">
       <div class="sidebar-header">
-        <h1>🌿 Kimiko Admin</h1>
+        <h1>Kimiko Admin</h1>
         <p>Botanical Grace 8</p>
       </div>
       <nav>
@@ -42,32 +68,19 @@
             <option value="ja">Japanese</option>
           </select>
         </div>
+        <button class="btn-logout" id="btn-logout">Log Out</button>
       </div>
     </aside>
     <main id="content">
-      <div id="welcome" class="welcome-screen">
+      <div class="welcome-screen">
         <h2>Welcome to Kimiko Admin</h2>
         <p>Select a collection from the sidebar to get started.</p>
-        <div class="welcome-cards">
-          <a href="#articles" class="welcome-card">
-            <span class="welcome-icon">📝</span>
-            <span>Articles</span>
-          </a>
-          <a href="#herbs" class="welcome-card">
-            <span class="welcome-icon">🌿</span>
-            <span>Herbs</span>
-          </a>
-          <a href="#courses" class="welcome-card">
-            <span class="welcome-icon">📚</span>
-            <span>Courses</span>
-          </a>
-        </div>
       </div>
     </main>
   </div>
 
   <div id="toast-container"></div>
 
-  <script type="module" src="/app.mjs"></script>
+  <script type="module" src={`${base}/admin/app.mjs`}></script>
 </body>
 </html>

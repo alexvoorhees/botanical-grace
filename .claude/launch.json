@@ -15,8 +15,8 @@
     },
     {
       "name": "admin",
-      "runtimeExecutable": "node",
-      "runtimeArgs": ["admin/server.mjs"],
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "dist", "-l", "4400"],
       "port": 4400
     }
   ]

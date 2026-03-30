@@ -1,7 +1,73 @@
-// === Kimiko Admin SPA ===
+// === Kimiko Admin SPA (GitHub API version) ===
 
-const API = '';
+import {
+  verifyCredentials, decryptPAT, validateToken,
+  listEntries, readEntry, writeEntry, deleteEntry as apiDeleteEntry,
+  triggerImageGeneration, pollWorkflowStatus,
+} from './github-api.mjs';
+
 let langFilter = 'all';
+
+// --- Login ---
+
+async function initLogin() {
+  // Check if already authenticated
+  if (sessionStorage.getItem('gh_pat')) {
+    showApp();
+    return;
+  }
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const errEl = document.getElementById('login-error');
+    const btn = document.getElementById('login-btn');
+
+    errEl.textContent = '';
+    btn.disabled = true;
+    btn.textContent = 'Logging in...';
+
+    try {
+      const valid = await verifyCredentials(email, password);
+      if (!valid) {
+        errEl.textContent = 'Invalid email or password.';
+        return;
+      }
+
+      const pat = await decryptPAT(password);
+      sessionStorage.setItem('gh_pat', pat);
+
+      const tokenOk = await validateToken();
+      if (!tokenOk) {
+        sessionStorage.removeItem('gh_pat');
+        errEl.textContent = 'Authentication failed. Please contact the administrator.';
+        return;
+      }
+
+      showApp();
+    } catch (err) {
+      errEl.textContent = 'Login failed. Please try again.';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Log In';
+    }
+  });
+}
+
+function showApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  loadCounts();
+  route();
+}
+
+function logout() {
+  sessionStorage.removeItem('gh_pat');
+  location.reload();
+}
 
 // --- Router ---
 
@@ -28,22 +94,33 @@ window.addEventListener('hashchange', route);
 
 // --- Init ---
 
-document.addEventListener('DOMContentLoaded', () => {
+function init() {
   document.getElementById('lang-filter').addEventListener('change', (e) => {
     langFilter = e.target.value;
     route();
   });
-  loadCounts();
-  route();
-});
+  document.getElementById('btn-logout').addEventListener('click', logout);
+  initLogin();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+// --- Entry cache ---
+const entryCache = {};
 
 async function loadCounts() {
   for (const col of ['articles', 'herbs', 'courses']) {
     try {
-      const res = await fetch(`${API}/api/content/${col}`);
-      const data = await res.json();
-      document.getElementById(`count-${col}`).textContent = data.length;
-    } catch { /* ignore */ }
+      const entries = await listEntries(col);
+      entryCache[col] = entries;
+      document.getElementById(`count-${col}`).textContent = entries.length;
+    } catch {
+      document.getElementById(`count-${col}`).textContent = '?';
+    }
   }
 }
 
@@ -54,7 +131,7 @@ function toast(msg, type = 'info') {
   el.className = `toast ${type}`;
   el.textContent = msg;
   document.getElementById('toast-container').appendChild(el);
-  setTimeout(() => el.remove(), 3500);
+  setTimeout(() => el.remove(), 4500);
 }
 
 // --- Welcome ---
@@ -66,9 +143,9 @@ function showWelcome() {
       <h2>Welcome to Kimiko Admin</h2>
       <p>Select a collection from the sidebar to get started.</p>
       <div class="welcome-cards">
-        <a href="#articles" class="welcome-card"><span class="welcome-icon">📝</span><span>Articles</span></a>
-        <a href="#herbs" class="welcome-card"><span class="welcome-icon">🌿</span><span>Herbs</span></a>
-        <a href="#courses" class="welcome-card"><span class="welcome-icon">📚</span><span>Courses</span></a>
+        <a href="#articles" class="welcome-card"><span class="welcome-icon">\u{1F4DD}</span><span>Articles</span></a>
+        <a href="#herbs" class="welcome-card"><span class="welcome-icon">\u{1F33F}</span><span>Herbs</span></a>
+        <a href="#courses" class="welcome-card"><span class="welcome-icon">\u{1F4DA}</span><span>Courses</span></a>
       </div>
     </div>`;
 }
@@ -76,7 +153,7 @@ function showWelcome() {
 // --- List View ---
 
 const COLLECTION_LABELS = { articles: 'Articles', herbs: 'Herbs', courses: 'Courses' };
-const COLLECTION_ICONS = { articles: '📝', herbs: '🌿', courses: '📚' };
+const COLLECTION_ICONS = { articles: '\u{1F4DD}', herbs: '\u{1F33F}', courses: '\u{1F4DA}' };
 
 async function renderList(collection) {
   const main = document.getElementById('content');
@@ -90,8 +167,11 @@ async function renderList(collection) {
     </div>`;
 
   try {
-    const res = await fetch(`${API}/api/content/${collection}`);
-    const entries = await res.json();
+    let entries = entryCache[collection];
+    if (!entries) {
+      entries = await listEntries(collection);
+      entryCache[collection] = entries;
+    }
 
     const filtered = langFilter === 'all'
       ? entries
@@ -114,12 +194,11 @@ async function renderList(collection) {
       const lang = entry.lang || entry._lang;
       const slug = entry.slug || entry._file?.replace('.md', '');
       const meta = entryMeta(collection, entry);
-      const imgSrc = entry.image ? entry.image.replace('/Kimiko_Site', '') : '';
 
       return `
         <div class="entry-card" onclick="location.hash='edit/${collection}/${lang}/${slug}'">
           <div class="entry-thumb">
-            ${imgSrc ? `<img src="${imgSrc}" alt="" loading="lazy">` : COLLECTION_ICONS[collection]}
+            ${COLLECTION_ICONS[collection]}
           </div>
           <div class="entry-info">
             <div class="entry-title">${esc(entry.title || slug)}</div>
@@ -129,7 +208,7 @@ async function renderList(collection) {
             </div>
           </div>
           <div class="entry-actions">
-            <button class="btn-delete" onclick="event.stopPropagation(); deleteEntry('${collection}', '${lang}', '${slug}')" title="Delete">🗑</button>
+            <button class="btn-delete" onclick="event.stopPropagation(); window._deleteEntry('${collection}', '${lang}', '${slug}')" title="Delete">\u{1F5D1}</button>
           </div>
         </div>`;
     }).join('');
@@ -142,16 +221,16 @@ async function renderList(collection) {
 function entryMeta(collection, entry) {
   if (collection === 'articles') return `<span>${entry.date || ''}</span>`;
   if (collection === 'herbs') return `<span>${esc(entry.scientificName || '')}</span>`;
-  if (collection === 'courses') return `<span>${entry.certification || ''}</span><span>¥${(entry.price || 0).toLocaleString()}</span>`;
+  if (collection === 'courses') return `<span>${entry.certification || ''}</span><span>\u00A5${(entry.price || 0).toLocaleString()}</span>`;
   return '';
 }
 
-window.deleteEntry = async function(collection, lang, slug) {
+window._deleteEntry = async function(collection, lang, slug) {
   if (!confirm(`Delete ${lang}/${slug}? This cannot be undone.`)) return;
   try {
-    const res = await fetch(`${API}/api/content/${collection}/${lang}/${slug}`, { method: 'DELETE' });
-    if (!res.ok) throw new Error('Delete failed');
-    toast('Entry deleted', 'success');
+    await apiDeleteEntry(collection, lang, slug);
+    toast('Entry deleted! Site will update in ~2 minutes.', 'success');
+    delete entryCache[collection];
     loadCounts();
     renderList(collection);
   } catch (err) {
@@ -187,8 +266,8 @@ const FIELD_DEFS = {
     { key: 'lang', label: 'Language', type: 'select', options: ['en', 'ja'], required: true, half: true },
     { key: 'certification', label: 'Certification', type: 'text', required: true, half: true },
     { key: 'order', label: 'Display Order', type: 'number', required: true, half: true },
-    { key: 'price', label: 'Price (¥)', type: 'number', required: true, half: true },
-    { key: 'textbookPrice', label: 'Textbook Price (¥)', type: 'number', half: true },
+    { key: 'price', label: 'Price (\u00A5)', type: 'number', required: true, half: true },
+    { key: 'textbookPrice', label: 'Textbook Price (\u00A5)', type: 'number', half: true },
     { key: 'sessions', label: 'Sessions', type: 'number', required: true, half: true },
     { key: 'totalHours', label: 'Total Hours', type: 'number', required: true, half: true },
     { key: 'image', label: 'Image Path', type: 'text', half: true },
@@ -203,11 +282,11 @@ async function renderEditor(collection, lang, slug) {
   let frontmatter = {};
   let body = '';
 
+  main.innerHTML = `<div class="empty-state"><p>Loading...</p></div>`;
+
   if (!isNew) {
     try {
-      const res = await fetch(`${API}/api/content/${collection}/${lang}/${slug}`);
-      if (!res.ok) throw new Error('Not found');
-      const data = await res.json();
+      const data = await readEntry(collection, lang, slug);
       frontmatter = data.frontmatter;
       body = data.body;
     } catch (err) {
@@ -225,7 +304,7 @@ async function renderEditor(collection, lang, slug) {
 
   main.innerHTML = `
     <div class="form-header">
-      <a href="#${collection}" class="btn-back">← Back</a>
+      <a href="#${collection}" class="btn-back">\u2190 Back</a>
       <h2>${isNew ? 'New' : 'Edit'} ${COLLECTION_LABELS[collection].slice(0, -1)}</h2>
     </div>
     <div class="edit-form">
@@ -259,7 +338,6 @@ async function renderEditor(collection, lang, slug) {
 
   document.getElementById('btn-save').addEventListener('click', () => saveEntry(collection, isNew));
 
-  // Image generation
   const genBtn = document.getElementById('btn-generate-image');
   if (genBtn) {
     genBtn.addEventListener('click', () => generateImage(collection));
@@ -289,9 +367,8 @@ function renderField(field, data) {
 }
 
 function renderImagePanel(collection, frontmatter) {
-  if (collection === 'courses') return ''; // courses use manually assigned images
+  if (collection === 'courses') return '';
 
-  const currentImg = frontmatter.image ? frontmatter.image.replace('/Kimiko_Site', '') : '';
   const promptTemplate = collection === 'herbs'
     ? `${frontmatter.nameEn || frontmatter.title || '[Herb name]'} (${frontmatter.scientificName || '[Scientific name]'}) with distinctive flowers and leaves. Elegant botanical watercolor illustration on a clean off-white (#FAFAF5) background. Soft naturalistic style with gentle shadows. Minimalist composition, no text or labels.`
     : `[Describe the scene relevant to this article]. Wellness aesthetic. Elegant botanical watercolor illustration on a clean off-white (#FAFAF5) background. Soft naturalistic style with gentle shadows. Minimalist composition, no text or labels.`;
@@ -299,13 +376,13 @@ function renderImagePanel(collection, frontmatter) {
   return `
     <div class="form-group full">
       <details class="image-panel">
-        <summary>🎨 Generate Image</summary>
+        <summary>\u{1F3A8} Generate Image</summary>
         <div class="image-panel-content">
-          ${currentImg ? `<div class="image-preview"><img src="${currentImg}" alt="Current image"></div>` : ''}
           <label style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-top:0.5rem;display:block;">Image Prompt</label>
           <textarea id="image-prompt">${esc(promptTemplate)}</textarea>
-          <button class="btn-generate" id="btn-generate-image">🎨 Generate Image</button>
+          <button class="btn-generate" id="btn-generate-image">\u{1F3A8} Generate Image</button>
           <div id="image-gen-status"></div>
+          <p class="image-gen-note">Image generation runs via GitHub Actions. It takes 1-2 minutes and the image will appear on the site after the next deploy.</p>
         </div>
       </details>
     </div>`;
@@ -321,30 +398,47 @@ async function generateImage(collection) {
   if (!slug) { toast('Set a slug first', 'error'); return; }
 
   btn.disabled = true;
-  status.innerHTML = '<div class="generating-spinner"><div class="spinner"></div>Generating image... this may take a minute.</div>';
+  status.innerHTML = '<div class="generating-spinner"><div class="spinner"></div>Triggering image generation...</div>';
 
   try {
-    const res = await fetch(`${API}/api/generate-image`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt, collection, slug }),
-    });
+    await triggerImageGeneration(collection, slug, prompt);
 
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Generation failed');
-
-    // Update the image path field
+    // Update image path field
     const imgField = document.getElementById('field-image');
-    if (imgField) imgField.value = data.path;
+    if (imgField) imgField.value = `/Kimiko_Site/images/${collection}/${slug}.png`;
 
-    // Show preview
-    const localPath = data.path.replace('/Kimiko_Site', '');
-    status.innerHTML = `<div class="image-preview"><img src="${localPath}?t=${Date.now()}" alt="Generated image"></div>`;
-    toast('Image generated!', 'success');
+    status.innerHTML = '<div class="generating-spinner"><div class="spinner"></div>Workflow running... checking status every 10s.</div>';
+
+    // Poll for completion
+    let attempts = 0;
+    const maxAttempts = 30; // 5 minutes max
+    const poll = setInterval(async () => {
+      attempts++;
+      try {
+        const run = await pollWorkflowStatus();
+        if (run && run.status === 'completed') {
+          clearInterval(poll);
+          if (run.conclusion === 'success') {
+            status.innerHTML = '<p style="color:var(--sage-600);font-size:0.8125rem;">Image generated! It will appear on the site after the next deploy (~2 min).</p>';
+            toast('Image generated!', 'success');
+          } else {
+            status.innerHTML = `<p style="color:#c44;font-size:0.8125rem;">Workflow failed. <a href="${run.url}" target="_blank">View details</a></p>`;
+            toast('Image generation failed', 'error');
+          }
+          btn.disabled = false;
+        }
+      } catch { /* ignore poll errors */ }
+
+      if (attempts >= maxAttempts) {
+        clearInterval(poll);
+        status.innerHTML = '<p style="font-size:0.8125rem;">Still running. Check GitHub Actions for status.</p>';
+        btn.disabled = false;
+      }
+    }, 10000);
+
   } catch (err) {
     status.innerHTML = '';
     toast(`Image generation failed: ${err.message}`, 'error');
-  } finally {
     btn.disabled = false;
   }
 }
@@ -394,16 +488,9 @@ async function saveEntry(collection, isNew) {
   btn.textContent = 'Saving...';
 
   try {
-    const res = await fetch(`${API}/api/content/${collection}/${lang}/${slug}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ frontmatter, body }),
-    });
-
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Save failed');
-
-    toast('Entry saved!', 'success');
+    await writeEntry(collection, lang, slug, frontmatter, body);
+    toast('Saved! Site will update in ~2 minutes.', 'success');
+    delete entryCache[collection];
     loadCounts();
 
     if (isNew) {

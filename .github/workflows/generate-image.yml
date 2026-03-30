@@ -1,0 +1,57 @@
+name: Generate Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      collection:
+        description: 'Collection (articles, herbs, courses)'
+        required: true
+      slug:
+        description: 'Entry slug'
+        required: true
+      prompt:
+        description: 'Image generation prompt'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate image via Venice AI
+        env:
+          VENICE_API_KEY: ${{ secrets.VENICE_API_KEY }}
+        run: |
+          SIZE="1792x1024"
+          if [ "${{ inputs.collection }}" = "herbs" ]; then SIZE="1024x1024"; fi
+
+          mkdir -p "public/images/${{ inputs.collection }}"
+
+          PROMPT=$(jq -Rs . <<< "${{ inputs.prompt }}")
+
+          RESPONSE=$(curl -s -X POST https://api.venice.ai/api/v1/images/generations \
+            -H "Authorization: Bearer $VENICE_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d "{\"model\":\"fluently-xl\",\"prompt\":${PROMPT},\"n\":1,\"size\":\"${SIZE}\"}")
+
+          echo "$RESPONSE" | jq -r '.data[0].b64_json' | base64 -d > "public/images/${{ inputs.collection }}/${{ inputs.slug }}.png"
+
+          if [ ! -s "public/images/${{ inputs.collection }}/${{ inputs.slug }}.png" ]; then
+            echo "Error: Image file is empty"
+            echo "$RESPONSE" | jq .
+            exit 1
+          fi
+
+          echo "Image generated: public/images/${{ inputs.collection }}/${{ inputs.slug }}.png"
+
+      - name: Commit and push image
+        run: |
+          git config user.name "Kimiko Admin Bot"
+          git config user.email "noreply@botanicalgrace8.com"
+          git add "public/images/${{ inputs.collection }}/${{ inputs.slug }}.png"
+          git commit -m "admin: generate image for ${{ inputs.collection }}/${{ inputs.slug }}"
+          git push

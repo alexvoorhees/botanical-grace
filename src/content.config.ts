@@ -17,6 +17,7 @@ const courses = defineCollection({
     sessions: z.number(),
     totalHours: z.number(),
     image: z.string().optional(),
+    heroImage: z.string().optional(),
     order: z.number(),
     lang: z.enum(['ja', 'en']),
     slug: z.string(),

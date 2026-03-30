@@ -1,29 +1,48 @@
 ---
 title: "Vegetable Soup & Smoothie Course"
-subtitle: "Healthy eating through the power of vegetables"
+subtitle: "Healthy eating through the 'food as medicine' philosophy"
 certification: "BG8"
-price: 11000
-sessions: 3
-totalHours: 6
+price: 22000
+sessions: 10
+totalHours: 10
 order: 6
 lang: "en"
 slug: "soup"
-description: "Learn to make nutritious vegetable soups and smoothies for a simple, healthy diet."
+description: "Learn to select ingredients by health theme using the nutritional and phytochemical properties of vegetables, fruits, and herbs."
 image: "/Kimiko_Site/images/courses/course6.png"
+heroImage: "/Kimiko_Site/images/courses/soup_hero.png"
 ---
 
 ## Course Overview
 
-This course teaches recipes for nutrient-rich vegetable soups and smoothies that are easy to incorporate into a busy lifestyle.
+Based on the traditional "food as medicine" philosophy, learn to make soups and smoothies that leverage the phytochemical and nutritional properties of vegetables, fruits, and herbs. Develop the ability to select ingredients by health theme rather than appearance alone.
 
-## Curriculum
+Two courses are available: Vegetable Soup Course and Smoothie Course.
 
-- Vegetable Nutrition and Health Benefits
-- Soup Fundamentals and Advanced Recipes
-- Smoothie Fundamentals and Advanced Recipes
+## Curriculum (10 Sessions / 1 Hour Each)
 
-## Who This Course Is For
+| Session | Vegetable Soup or Smoothie Course |
+|:-------:|-----------------------------------|
+| 1 | Recipes for Digestive Health |
+| 2 | Recipes for Cardiovascular Health |
+| 3 | Recipes for Respiratory Health |
+| 4 | Recipes for Kidney Health |
+| 5 | Recipes for Nervous System Health |
+| 6 | Recipes for Endocrine Balance |
+| 7 | Recipes for Immune Support |
+| 8 | Recipes for Skin Health |
+| 9 | Recipes for Brain Function |
+| 10 | Recipes for Lifestyle Disease Prevention |
 
-- Those interested in healthy eating
-- Those wanting to consume more vegetables easily
-- Those wanting to manage family health
+Each session covers the phytochemical and nutritional properties of relevant vegetables, fruits, and herbs while teaching practical recipes.
+
+## Tuition
+
+| Item | Details |
+|------|---------|
+| Course hours | 1 hr × 10 sessions |
+| Tuition | ¥22,000 (tax included) |
+
+## Important Notice
+
+This course does not constitute medical treatment. Those taking medications, pregnant individuals, or those with health conditions should consult a physician before applying course concepts.

@@ -29,7 +29,7 @@ const courses = allCourses
   .sort((a, b) => a.data.order - b.data.order);
 
 const allArticles = await getCollection('articles');
-const articles = allArticles.filter((a) => a.data.lang === lang).slice(0, 3);
+const articles = allArticles.filter((a) => a.data.lang === lang).slice(0, 6);
 
 const heroSlides = [
   {
@@ -125,7 +125,7 @@ const announcements = [
         <span class="shrink-0 text-gold-600 font-bold text-sm bg-gold-200 px-3 py-1 rounded-full mt-0.5">
           お知らせ
         </span>
-        <ul class="space-y-1.5 text-sm text-text/80">
+        <ul class="space-y-1.5 text-sm text-text/80 leading-relaxed">
           {announcements.map((a) => (
             <li class="flex items-start gap-2">
               <span class:list={['shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full', a.highlight ? 'bg-gold-500' : 'bg-sage-300']} />
@@ -137,11 +137,63 @@ const announcements = [
     </div>
   </section>
 
+  <!-- Welcome Intro -->
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl font-bold text-text mb-6 text-balance">ハーブオンライン授業で<br />分かりやすく丁寧に教えます</h2>
+          <p class="text-text/70 leading-relaxed mb-4">
+            在宅資格学習でハーブの資格を仕事や、生活に生かしてみませんか。ハーバルセラピスト資格取得を目指す方には、合格に向けての指導をサポートします。
+          </p>
+          <ul class="space-y-2 text-text/70 mb-6">
+            <li class="flex items-start gap-2">
+              <span class="text-sage-500 mt-1">●</span>
+              初心者の方でも、どなたでも受講できます。
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-sage-500 mt-1">●</span>
+              オンライン授業・対面授業にも対応しています。
+            </li>
+          </ul>
+          <a
+            href={`${base}/${lang}/courses/`}
+            class="inline-flex items-center gap-2 px-6 py-3 bg-sage-600 text-white font-semibold rounded-xl hover:bg-sage-700 transition-colors"
+          >
+            講座紹介
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+            </svg>
+          </a>
+        </div>
+        <div class="relative">
+          <img
+            src={`${base}/images/hero/slide1.jpg`}
+            alt="ハーブの授業風景"
+            class="rounded-2xl shadow-lg w-full object-cover aspect-[4/3]"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Philosophy -->
+  <section class="py-16 lg:py-20 bg-cream">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-2xl lg:text-3xl font-bold text-text mb-4 text-balance">医食同源・薬食同源</h2>
+      <p class="text-lg text-text/60 mb-6 leading-relaxed">植物療法は、医療・美容の分野にも有用</p>
+      <p class="text-text/70 leading-relaxed max-w-2xl mx-auto">
+        古くから伝わる「医食同源・薬食同源」の考え方は、食べ物と薬は同じ源であるという東洋の知恵です。植物に含まれるフィトケミカルや精油成分は、免疫力の向上、ストレスケア、美容など、さまざまな面で私たちの健康をサポートしてくれます。BOTANICAL GRACE 8では、この伝統的な知恵と現代の科学を融合した学びを提供しています。
+      </p>
+    </div>
+  </section>
+
   <!-- Classroom Features -->
   <section class="py-16 lg:py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-text mb-3">選ばれる理由</h2>
+        <h2 class="text-3xl font-bold text-text mb-3 text-balance">選ばれる理由</h2>
         <p class="text-text/60">BOTANICAL GRACE 8の特長</p>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
@@ -161,8 +213,8 @@ const announcements = [
               <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
             </svg>
           </div>
-          <h3 class="font-bold text-text text-sm mb-1">溜池山王駅 徒歩2分</h3>
-          <p class="text-xs text-text/60">赤坂の好アクセスな立地</p>
+          <h3 class="font-bold text-text text-sm mb-1">新橋駅・汐留駅 徒歩すぐ</h3>
+          <p class="text-xs text-text/60">汐留の好アクセスな立地</p>
         </div>
         <div class="text-center p-5 rounded-2xl bg-sage-50/50 border border-sage-100">
           <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-sage-100 flex items-center justify-center">
@@ -227,7 +279,7 @@ const announcements = [
           <h2 class="text-3xl font-bold text-text mb-3">{t(lang, 'column.title')}</h2>
           <p class="text-text/60">{t(lang, 'column.subtitle')}</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {articles.map((article) => (
             <ArticleCard
               title={article.data.title}
@@ -238,9 +290,52 @@ const announcements = [
             />
           ))}
         </div>
+        <div class="text-center mt-8">
+          <a href={`${base}/${lang}/articles/`} class="inline-flex items-center gap-2 text-sage-600 hover:text-sage-700 font-medium text-sm transition-colors">
+            すべてのコラムを見る
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+            </svg>
+          </a>
+        </div>
       </div>
     </section>
   )}
+
+  <!-- Promotional Banners -->
+  <section class="py-12 lg:py-16 bg-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <a href={`${base}/${lang}/herbs/`} class="group block bg-white rounded-2xl p-6 border border-sage-100 shadow-sm hover:shadow-md transition-shadow text-center">
+          <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-sage-100 flex items-center justify-center group-hover:bg-sage-200 transition-colors">
+            <svg class="w-7 h-7 text-sage-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+            </svg>
+          </div>
+          <h3 class="font-bold text-text mb-1">ハーブ一覧</h3>
+          <p class="text-sm text-text/60">メディカルハーブの図鑑</p>
+        </a>
+        <a href="https://bg8s.theshop.jp/" target="_blank" rel="noopener noreferrer" class="group block bg-white rounded-2xl p-6 border border-sage-100 shadow-sm hover:shadow-md transition-shadow text-center">
+          <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gold-100 flex items-center justify-center group-hover:bg-gold-200 transition-colors">
+            <svg class="w-7 h-7 text-gold-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+            </svg>
+          </div>
+          <h3 class="font-bold text-text mb-1">オンラインショップ</h3>
+          <p class="text-sm text-text/60">ハーブ関連商品のお買い物</p>
+        </a>
+        <a href={`${base}/${lang}/contact/`} class="group block bg-white rounded-2xl p-6 border border-sage-100 shadow-sm hover:shadow-md transition-shadow text-center">
+          <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-sage-100 flex items-center justify-center group-hover:bg-sage-200 transition-colors">
+            <svg class="w-7 h-7 text-sage-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+            </svg>
+          </div>
+          <h3 class="font-bold text-text mb-1">お問い合わせ</h3>
+          <p class="text-sm text-text/60">無料説明会・ご相談はこちら</p>
+        </a>
+      </div>
+    </div>
+  </section>
 
   <!-- Testimonials Carousel -->
   <section class="py-16 lg:py-24 bg-cream">
@@ -316,8 +411,8 @@ const announcements = [
   <!-- CTA -->
   <section class="py-16 lg:py-24 bg-sage-700 text-white">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-3xl font-bold mb-4">ハーブの世界への第一歩</h2>
-      <p class="text-sage-200 mb-8 text-lg">無料説明会を開催しています。お気軽にお問合せください。</p>
+      <h2 class="text-3xl font-bold mb-4 text-balance">ハーブの世界への第一歩</h2>
+      <p class="text-sage-200 mb-8 text-lg leading-relaxed">無料説明会を開催しています。お気軽にお問合せください。</p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a
           href={`${base}/${lang}/contact/`}

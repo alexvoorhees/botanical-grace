@@ -14,6 +14,21 @@ interface Props {
 const lang = getLangFromUrl(Astro.url);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const { title, nameJa, nameEn, scientificName, actions, slug, image } = Astro.props;
+
+// Generate a unique gradient from the slug so each card looks distinct
+const palettes = [
+  { from: '#e8f5e9', to: '#c8e6c9', accent: '#66bb6a' }, // green
+  { from: '#fce4ec', to: '#f8bbd0', accent: '#ec407a' }, // rose
+  { from: '#fff8e1', to: '#ffecb3', accent: '#ffa726' }, // amber
+  { from: '#e8eaf6', to: '#c5cae9', accent: '#7986cb' }, // indigo
+  { from: '#fff3e0', to: '#ffe0b2', accent: '#ff8a65' }, // peach
+  { from: '#f3e5f5', to: '#e1bee7', accent: '#ab47bc' }, // purple
+  { from: '#e0f2f1', to: '#b2dfdb', accent: '#26a69a' }, // teal
+  { from: '#fff9c4', to: '#fff176', accent: '#d4e157' }, // yellow-lime
+];
+const hash = slug.split('').reduce((h, c) => ((h << 5) - h + c.charCodeAt(0)) | 0, 0);
+const palette = palettes[Math.abs(hash) % palettes.length];
+const initial = title.charAt(0).toUpperCase();
 ---
 
 <a
@@ -24,8 +39,9 @@ const { title, nameJa, nameEn, scientificName, actions, slug, image } = Astro.pr
     {image ? (
       <img src={image} alt={title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
     ) : (
-      <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-sage-50 to-sage-100">
-        <svg class="w-14 h-14 text-sage-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+      <div class="w-full h-full flex flex-col items-center justify-center" style={`background: linear-gradient(135deg, ${palette.from}, ${palette.to});`}>
+        <span class="text-4xl font-bold mb-1 select-none" style={`color: ${palette.accent};`}>{initial}</span>
+        <svg class="w-10 h-10 opacity-30" style={`color: ${palette.accent};`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 12c0-3 2-6 6-6s6 3 6 6" />
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v16" />
           <path stroke-linecap="round" stroke-linejoin="round" d="M8 10c-2-1-4 0-5 2s0 4 2 5" />
@@ -35,7 +51,7 @@ const { title, nameJa, nameEn, scientificName, actions, slug, image } = Astro.pr
     )}
   </div>
   <div class="p-4">
-    <h3 class="font-bold text-text group-hover:text-sage-600 transition-colors">{title}</h3>
+    <h3 class="text-base font-bold text-text group-hover:text-sage-600 transition-colors">{title}</h3>
     <p class="text-xs text-text/40 italic mt-0.5">{scientificName}</p>
     <div class="flex flex-wrap gap-1 mt-2">
       {actions.slice(0, 3).map((action) => (

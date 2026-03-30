@@ -13,11 +13,20 @@ const lang = 'en';
         <p class="text-text/60">{t(lang, 'contact.subtitle')}</p>
       </div>
 
-      <div class="bg-sage-50 rounded-2xl p-6 text-center mb-10">
-        <p class="text-sm text-text/60 mb-2">{t(lang, 'contact.phone_label')}</p>
-        <a href="tel:070-1581-0168" class="text-2xl font-bold text-sage-700 hover:text-sage-600">
-          {t(lang, 'footer.phone')}
-        </a>
+      <!-- Phone & Email -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+        <div class="bg-sage-50 rounded-2xl p-6 text-center">
+          <p class="text-sm text-text/60 mb-2">{t(lang, 'contact.phone_label')}</p>
+          <a href="tel:070-1581-0168" class="text-xl font-bold text-sage-700 hover:text-sage-600">
+            {t(lang, 'footer.phone')}
+          </a>
+        </div>
+        <div class="bg-sage-50 rounded-2xl p-6 text-center">
+          <p class="text-sm text-text/60 mb-2">Email</p>
+          <a href="mailto:info@botanicalgrace8.com" class="text-base font-bold text-sage-700 hover:text-sage-600">
+            info@botanicalgrace8.com
+          </a>
+        </div>
       </div>
 
       <form

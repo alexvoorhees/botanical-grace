@@ -2,33 +2,46 @@
 title: "Medical Herb Coordinator"
 subtitle: "Learn the fundamentals of medicinal herbs"
 certification: "JAMHA"
-price: 27500
-sessions: 8
-totalHours: 16
+price: 17600
+sessions: 4
+totalHours: 8
 order: 2
 lang: "en"
 slug: "medicalherb"
-description: "Learn the basics of medicinal herbs and work toward your JAMHA Medical Herb Coordinator certification."
+description: "Learn the basics of 15 medicinal herbs and work toward your JAMHA Medical Herb Coordinator certification."
 image: "/Kimiko_Site/images/courses/course2.png"
+heroImage: "/Kimiko_Site/images/courses/medicalherb_hero.png"
 ---
 
 ## Course Overview
 
-The JAMHA Medical Herb Coordinator is an introductory qualification for applying medicinal herbs in daily life. Learn about 15 essential medicinal herbs.
+The JAMHA Medical Herb Coordinator is an introductory qualification for safely applying medicinal herbs in daily life. Learn about 15 medicinal herbs including their scientific names, families, key components, actions, and applications.
 
-## Curriculum
+Also useful for those working in herb shops, aroma salons, or online retail.
 
-- The World of Medicinal Herbs
-- How Medicinal Herbs Work
-- How to Use Medicinal Herbs
-- Herb Blending Techniques
-- Healing Recipes with Herbs
-- Herbs in Daily Life
-- Medicinal Herb Profiles (15 varieties)
-- Exam Preparation and Review
+## Curriculum (4 Sessions / 8 Hours)
 
-## Who This Course Is For
+| Session | Course Content | Herbs (15 varieties) |
+|:-------:|----------------|----------------------|
+| 1 | The World and History of Medicinal Herbs | Marshmallow, Echinacea, Elderflower |
+| 2 | How Medicinal Herbs Work | German Chamomile, St. John's Wort, Dandelion, Nettle |
+| 3 | How to Use Medicinal Herbs | Hibiscus, Passionflower, Peppermint, Mate |
+| 4 | Healing Recipes and Daily Application | Mulberry, Raspberry Leaf, Linden, Rosehip |
 
-- Beginners interested in herbs
-- Those wanting to incorporate herbs into daily life
-- Those taking their first step toward JAMHA certification
+## Tuition
+
+| Item | Details |
+|------|---------|
+| Course hours | 2 hrs × 4 sessions = 8 hours total |
+| Textbook | Official textbook (please purchase at a bookstore) |
+| Tuition | ¥17,600 (tax included) |
+
+Accepting students year-round. One-on-one instruction for thorough, easy-to-understand learning.
+
+## After Certification
+
+After passing the JAMHA Medical Herb Certification exam and joining JAMHA, you can apply for the "Medical Herb Coordinator" credential.
+
+## Exam Preparation
+
+Free exam prep included. Thorough support until you pass.

@@ -794,7 +794,10 @@ async function renderEditor(collection, lang, slug) {
       }
 
       ta.focus();
-      ta.setRangeText(insert, start, end, 'end');
+      ta.selectionStart = start;
+      ta.selectionEnd = end;
+      // Use execCommand to preserve undo history (Ctrl+Z)
+      document.execCommand('insertText', false, insert);
       if (!sel) {
         // Select the placeholder text
         ta.selectionStart = start + cursorOffset;

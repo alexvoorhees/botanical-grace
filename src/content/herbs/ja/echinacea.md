@@ -7,7 +7,7 @@ actions:
   - "免疫賦活"
   - "抗ウイルス"
   - "抗菌"
-image: "/Kimiko_Site/images/herbs/echinacea.png"
+image: "/botanical-grace/images/herbs/echinacea.png"
 lang: "ja"
 slug: "echinacea"
 ---

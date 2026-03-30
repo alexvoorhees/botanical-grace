@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://alexvoorhees.github.io',
-  base: '/Kimiko_Site',
+  base: '/botanical-grace',
   vite: {
     plugins: [tailwindcss()],
   },

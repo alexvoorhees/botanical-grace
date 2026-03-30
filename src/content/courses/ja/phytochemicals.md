@@ -9,8 +9,8 @@ order: 5
 lang: "ja"
 slug: "phytochemicals"
 description: "野菜・果物・ハーブなどの栄養やフィトケミカル成分と精油の身体に働きかける作用を、器官別にテーマにした植物療法講座です。"
-image: "/Kimiko_Site/images/courses/course5.png"
-heroImage: "/Kimiko_Site/images/courses/phytochemicals_hero.png"
+image: "/botanical-grace/images/courses/course5.png"
+heroImage: "/botanical-grace/images/courses/phytochemicals_hero.png"
 ---
 
 ## 講座概要

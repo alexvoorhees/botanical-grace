@@ -17,7 +17,7 @@
 - Language detection and URL switching in `src/i18n/languages.ts`
 
 ### BASE_URL Pattern
-Astro's `BASE_URL` is `/Kimiko_Site` (no trailing slash). Every file that builds URLs must use:
+Astro's `BASE_URL` is `/botanical-grace` (no trailing slash). Every file that builds URLs must use:
 ```ts
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 // then: `${base}/${lang}/path/`

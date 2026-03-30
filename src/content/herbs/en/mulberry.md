@@ -7,7 +7,7 @@ actions:
   - "Blood Sugar Control"
   - "Antioxidant"
   - "Nourishing"
-image: "/Kimiko_Site/images/herbs/mulberry.png"
+image: "/botanical-grace/images/herbs/mulberry.png"
 lang: "en"
 slug: "mulberry"
 ---

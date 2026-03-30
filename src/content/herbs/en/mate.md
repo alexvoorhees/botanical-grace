@@ -7,7 +7,7 @@ actions:
   - "Stimulant"
   - "Diuretic"
   - "Metabolism Boost"
-image: "/Kimiko_Site/images/herbs/mate.png"
+image: "/botanical-grace/images/herbs/mate.png"
 lang: "en"
 slug: "mate"
 ---

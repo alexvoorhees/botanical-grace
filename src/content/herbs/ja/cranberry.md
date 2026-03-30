@@ -7,7 +7,7 @@ actions:
   - "尿路感染予防"
   - "抗酸化"
   - "抗菌"
-image: "/Kimiko_Site/images/herbs/cranberry.png"
+image: "/botanical-grace/images/herbs/cranberry.png"
 lang: "ja"
 slug: "cranberry"
 ---

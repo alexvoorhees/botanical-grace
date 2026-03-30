@@ -7,7 +7,7 @@ actions:
   - "消化促進"
   - "鎮痙"
   - "抗菌"
-image: "/Kimiko_Site/images/herbs/peppermint.png"
+image: "/botanical-grace/images/herbs/peppermint.png"
 lang: "ja"
 slug: "peppermint"
 ---

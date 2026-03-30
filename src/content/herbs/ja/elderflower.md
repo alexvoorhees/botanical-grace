@@ -7,7 +7,7 @@ actions:
   - "発汗"
   - "利尿"
   - "抗カタル"
-image: "/Kimiko_Site/images/herbs/elderflower.png"
+image: "/botanical-grace/images/herbs/elderflower.png"
 lang: "ja"
 slug: "elderflower"
 ---

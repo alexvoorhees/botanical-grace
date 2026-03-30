@@ -2,7 +2,7 @@
 title: "ミネラル（無機質）の種類と働き"
 date: "2022-12-24"
 excerpt: "ヒトの体に必要なミネラルの種類と、それぞれの機能について解説します。"
-image: "/Kimiko_Site/images/articles/minerals.png"
+image: "/botanical-grace/images/articles/minerals.png"
 lang: "ja"
 slug: "minerals"
 ---

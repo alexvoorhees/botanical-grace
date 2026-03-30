@@ -7,7 +7,7 @@ actions:
   - "Antibacterial"
   - "Cough Relief"
   - "Expectorant"
-image: "/Kimiko_Site/images/herbs/thyme.png"
+image: "/botanical-grace/images/herbs/thyme.png"
 lang: "en"
 slug: "thyme"
 ---

@@ -7,7 +7,7 @@ actions:
   - "子宮強壮"
   - "収れん"
   - "栄養補給"
-image: "/Kimiko_Site/images/herbs/raspberry-leaf.png"
+image: "/botanical-grace/images/herbs/raspberry-leaf.png"
 lang: "ja"
 slug: "raspberry-leaf"
 ---

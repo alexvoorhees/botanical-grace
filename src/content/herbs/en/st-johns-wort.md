@@ -7,7 +7,7 @@ actions:
   - "Antidepressant"
   - "Sedative"
   - "Antiviral"
-image: "/Kimiko_Site/images/herbs/st-johns-wort.png"
+image: "/botanical-grace/images/herbs/st-johns-wort.png"
 lang: "en"
 slug: "st-johns-wort"
 ---

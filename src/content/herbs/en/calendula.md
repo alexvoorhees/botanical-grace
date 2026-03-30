@@ -7,7 +7,7 @@ actions:
   - "Wound Healing"
   - "Anti-inflammatory"
   - "Skin Protection"
-image: "/Kimiko_Site/images/herbs/calendula.png"
+image: "/botanical-grace/images/herbs/calendula.png"
 lang: "en"
 slug: "calendula"
 ---

@@ -1,7 +1,7 @@
 // === GitHub Contents API Wrapper ===
 
 const OWNER = 'alexvoorhees';
-const REPO = 'Kimiko_Site';
+const REPO = 'botanical-grace';
 const API = `https://api.github.com/repos/${OWNER}/${REPO}`;
 const BRANCH = 'main';
 

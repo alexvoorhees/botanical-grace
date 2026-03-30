@@ -2,7 +2,7 @@
 title: "ビタミンの働きと種類"
 date: "2024-01-15"
 excerpt: "ビタミンの種類と体内での働きについて解説します。日々の食事で意識したいビタミンの基礎知識。"
-image: "/Kimiko_Site/images/articles/vitamin-functions.png"
+image: "/botanical-grace/images/articles/vitamin-functions.png"
 lang: "ja"
 slug: "vitamin-functions"
 ---

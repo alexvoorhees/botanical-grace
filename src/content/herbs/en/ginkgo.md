@@ -7,7 +7,7 @@ actions:
   - "Circulation"
   - "Antioxidant"
   - "Cognitive Support"
-image: "/Kimiko_Site/images/herbs/ginkgo.png"
+image: "/botanical-grace/images/herbs/ginkgo.png"
 lang: "en"
 slug: "ginkgo"
 ---

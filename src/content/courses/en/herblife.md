@@ -9,8 +9,8 @@ order: 3
 lang: "en"
 slug: "herblife"
 description: "Learn about 56 herbs and spices for cooking, beauty, beverages, and cultivation to enjoy a rich herbal lifestyle."
-image: "/Kimiko_Site/images/courses/course3.png"
-heroImage: "/Kimiko_Site/images/courses/course3.png"
+image: "/botanical-grace/images/courses/course3.png"
+heroImage: "/botanical-grace/images/courses/course3.png"
 ---
 
 ## Course Overview

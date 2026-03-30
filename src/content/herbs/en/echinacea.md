@@ -7,7 +7,7 @@ actions:
   - "Immune Boosting"
   - "Antiviral"
   - "Antibacterial"
-image: "/Kimiko_Site/images/herbs/echinacea.png"
+image: "/botanical-grace/images/herbs/echinacea.png"
 lang: "en"
 slug: "echinacea"
 ---

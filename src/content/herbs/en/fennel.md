@@ -7,7 +7,7 @@ actions:
   - "Digestive Aid"
   - "Carminative"
   - "Galactagogue"
-image: "/Kimiko_Site/images/herbs/fennel.png"
+image: "/botanical-grace/images/herbs/fennel.png"
 lang: "en"
 slug: "fennel"
 ---

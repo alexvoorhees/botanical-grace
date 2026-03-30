@@ -2,7 +2,7 @@
 title: "Understanding Phytochemicals"
 date: "2022-05-10"
 excerpt: "An introduction to phytochemicals — plant-derived compounds that support health, beauty, and wellness."
-image: "/Kimiko_Site/images/articles/phytochemicals.png"
+image: "/botanical-grace/images/articles/phytochemicals.png"
 lang: "en"
 slug: "phytochemicals"
 ---

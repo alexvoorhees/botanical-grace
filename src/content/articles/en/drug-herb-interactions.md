@@ -2,7 +2,7 @@
 title: "Drug-Herb Interactions: What You Need to Know"
 date: "2022-05-10"
 excerpt: "Important information about herbs like St. John's Wort and Ginkgo that can interact with medications."
-image: "/Kimiko_Site/images/articles/drug-herb-interactions.png"
+image: "/botanical-grace/images/articles/drug-herb-interactions.png"
 lang: "en"
 slug: "drug-herb-interactions"
 ---

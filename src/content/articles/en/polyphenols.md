@@ -2,7 +2,7 @@
 title: "Types and Health Benefits of Polyphenols"
 date: "2024-02-10"
 excerpt: "Learn about the types of polyphenols found in plants and the health benefits they provide."
-image: "/Kimiko_Site/images/articles/polyphenols.png"
+image: "/botanical-grace/images/articles/polyphenols.png"
 lang: "en"
 slug: "polyphenols"
 ---

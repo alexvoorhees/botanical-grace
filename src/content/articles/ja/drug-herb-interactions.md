@@ -2,7 +2,7 @@
 title: "薬とハーブとの薬物相互作用について"
 date: "2022-05-10"
 excerpt: "セントジョーンズワートやイチョウ葉など、医薬品との相互作用に注意が必要なハーブについて解説します。"
-image: "/Kimiko_Site/images/articles/drug-herb-interactions.png"
+image: "/botanical-grace/images/articles/drug-herb-interactions.png"
 lang: "ja"
 slug: "drug-herb-interactions"
 ---

@@ -2,7 +2,7 @@
 
 Website for BOTANICAL GRACE 8 (ボタニカルグレイス8) — Kimiko Matsuno's herb & aromatherapy certification school in Akasaka, Tokyo.
 
-**Live site:** https://alexvoorhees.github.io/Kimiko_Site/
+**Live site:** https://alexvoorhees.github.io/botanical-grace/
 
 ## Tech Stack
 

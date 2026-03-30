@@ -7,7 +7,7 @@ actions:
   - "血行促進"
   - "抗酸化"
   - "認知機能改善"
-image: "/Kimiko_Site/images/herbs/ginkgo.png"
+image: "/botanical-grace/images/herbs/ginkgo.png"
 lang: "ja"
 slug: "ginkgo"
 ---

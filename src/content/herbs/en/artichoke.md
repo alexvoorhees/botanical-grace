@@ -7,7 +7,7 @@ actions:
   - "Liver Protection"
   - "Digestive Aid"
   - "Cholesterol Reduction"
-image: "/Kimiko_Site/images/herbs/artichoke.png"
+image: "/botanical-grace/images/herbs/artichoke.png"
 lang: "en"
 slug: "artichoke"
 ---

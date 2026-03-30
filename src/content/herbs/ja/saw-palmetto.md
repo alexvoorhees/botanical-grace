@@ -7,7 +7,7 @@ actions:
   - "前立腺保護"
   - "抗炎症"
   - "ホルモン調整"
-image: "/Kimiko_Site/images/herbs/saw-palmetto.png"
+image: "/botanical-grace/images/herbs/saw-palmetto.png"
 lang: "ja"
 slug: "saw-palmetto"
 ---

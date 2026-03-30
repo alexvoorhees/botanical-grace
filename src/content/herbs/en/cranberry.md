@@ -7,7 +7,7 @@ actions:
   - "UTI Prevention"
   - "Antioxidant"
   - "Antibacterial"
-image: "/Kimiko_Site/images/herbs/cranberry.png"
+image: "/botanical-grace/images/herbs/cranberry.png"
 lang: "en"
 slug: "cranberry"
 ---

@@ -687,7 +687,7 @@ async function generateImage(collection) {
 
     // Update image path field
     const imgField = document.getElementById('field-image');
-    if (imgField) imgField.value = `/Kimiko_Site/images/${collection}/${slug}.png`;
+    if (imgField) imgField.value = `/botanical-grace/images/${collection}/${slug}.png`;
 
     status.innerHTML = `<div class="generating-spinner"><div class="spinner"></div>${t('workflowRunning')}</div>`;
 

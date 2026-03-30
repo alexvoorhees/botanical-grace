@@ -7,7 +7,7 @@ actions:
   - "Sedative"
   - "Sleep Aid"
   - "Antispasmodic"
-image: "/Kimiko_Site/images/herbs/valerian.png"
+image: "/botanical-grace/images/herbs/valerian.png"
 lang: "en"
 slug: "valerian"
 ---

@@ -7,7 +7,7 @@ actions:
   - "Digestive Aid"
   - "Antispasmodic"
   - "Antibacterial"
-image: "/Kimiko_Site/images/herbs/peppermint.png"
+image: "/botanical-grace/images/herbs/peppermint.png"
 lang: "en"
 slug: "peppermint"
 ---

@@ -9,8 +9,8 @@ order: 6
 lang: "ja"
 slug: "soup"
 description: "野菜・果物などの栄養やフィトケミカル成分の観点から、目的別の食材選びにも役立つ講座です。"
-image: "/Kimiko_Site/images/courses/course6.png"
-heroImage: "/Kimiko_Site/images/courses/soup_hero.png"
+image: "/botanical-grace/images/courses/course6.png"
+heroImage: "/botanical-grace/images/courses/soup_hero.png"
 ---
 
 ## 講座概要

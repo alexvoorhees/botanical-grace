@@ -9,8 +9,8 @@ order: 5
 lang: "en"
 slug: "phytochemicals"
 description: "A plant therapy course organized by body system, covering the nutritional and phytochemical properties of vegetables, fruits, herbs, and essential oils."
-image: "/Kimiko_Site/images/courses/course5.png"
-heroImage: "/Kimiko_Site/images/courses/phytochemicals_hero.png"
+image: "/botanical-grace/images/courses/course5.png"
+heroImage: "/botanical-grace/images/courses/phytochemicals_hero.png"
 ---
 
 ## Course Overview

@@ -7,7 +7,7 @@ actions:
   - "Anti-allergy"
   - "Diuretic"
   - "Blood Purifying"
-image: "/Kimiko_Site/images/herbs/nettle.png"
+image: "/botanical-grace/images/herbs/nettle.png"
 lang: "en"
 slug: "nettle"
 ---

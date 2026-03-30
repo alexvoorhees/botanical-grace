@@ -18,7 +18,7 @@ credentials:
   - "食生活アドバイザー"
   - "漢方養生指導士"
   - "ハーブ薬膳フードデザイナー"
-image: "/Kimiko_Site/images/teacher.jpg"
+image: "/botanical-grace/images/teacher.jpg"
 lang: "ja"
 ---
 

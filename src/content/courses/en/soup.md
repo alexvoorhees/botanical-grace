@@ -9,8 +9,8 @@ order: 6
 lang: "en"
 slug: "soup"
 description: "Learn to select ingredients by health theme using the nutritional and phytochemical properties of vegetables, fruits, and herbs."
-image: "/Kimiko_Site/images/courses/course6.png"
-heroImage: "/Kimiko_Site/images/courses/soup_hero.png"
+image: "/botanical-grace/images/courses/course6.png"
+heroImage: "/botanical-grace/images/courses/soup_hero.png"
 ---
 
 ## Course Overview

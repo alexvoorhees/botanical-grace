@@ -18,7 +18,7 @@ credentials:
   - "Food Life Advisor"
   - "Chinese Medicine Practitioner"
   - "Herbal-Dietary Therapy Food Designer"
-image: "/Kimiko_Site/images/teacher.jpg"
+image: "/botanical-grace/images/teacher.jpg"
 lang: "en"
 ---
 

@@ -7,7 +7,7 @@ actions:
   - "Mucous Membrane Protection"
   - "Cough Relief"
   - "Anti-inflammatory"
-image: "/Kimiko_Site/images/herbs/mallow.png"
+image: "/botanical-grace/images/herbs/mallow.png"
 lang: "en"
 slug: "mallow"
 ---

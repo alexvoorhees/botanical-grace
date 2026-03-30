@@ -9,8 +9,8 @@ order: 2
 lang: "en"
 slug: "medicalherb"
 description: "Learn the basics of 15 medicinal herbs and work toward your JAMHA Medical Herb Coordinator certification."
-image: "/Kimiko_Site/images/courses/course2.png"
-heroImage: "/Kimiko_Site/images/courses/medicalherb_hero.png"
+image: "/botanical-grace/images/courses/course2.png"
+heroImage: "/botanical-grace/images/courses/medicalherb_hero.png"
 ---
 
 ## Course Overview

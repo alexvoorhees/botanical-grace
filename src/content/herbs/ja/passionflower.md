@@ -7,7 +7,7 @@ actions:
   - "鎮静"
   - "抗不安"
   - "睡眠改善"
-image: "/Kimiko_Site/images/herbs/passionflower.png"
+image: "/botanical-grace/images/herbs/passionflower.png"
 lang: "ja"
 slug: "passionflower"
 ---

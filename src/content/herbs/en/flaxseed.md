@@ -7,7 +7,7 @@ actions:
   - "Laxative"
   - "Anti-inflammatory"
   - "Cholesterol Reduction"
-image: "/Kimiko_Site/images/herbs/flaxseed.png"
+image: "/botanical-grace/images/herbs/flaxseed.png"
 lang: "en"
 slug: "flaxseed"
 ---

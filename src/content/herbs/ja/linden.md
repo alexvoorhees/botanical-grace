@@ -7,7 +7,7 @@ actions:
   - "鎮静"
   - "発汗"
   - "利尿"
-image: "/Kimiko_Site/images/herbs/linden.png"
+image: "/botanical-grace/images/herbs/linden.png"
 lang: "ja"
 slug: "linden"
 ---

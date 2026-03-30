@@ -9,8 +9,8 @@ order: 3
 lang: "ja"
 slug: "herblife"
 description: "56種類のハーブやスパイスの活用法を学び、料理・美容・ドリンクなどハーバルライフを楽しむための知識を身につけます。"
-image: "/Kimiko_Site/images/courses/course3.png"
-heroImage: "/Kimiko_Site/images/courses/course3.png"
+image: "/botanical-grace/images/courses/course3.png"
+heroImage: "/botanical-grace/images/courses/course3.png"
 ---
 
 ## 講座概要

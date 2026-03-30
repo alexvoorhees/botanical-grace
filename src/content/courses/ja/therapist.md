@@ -10,8 +10,8 @@ order: 1
 lang: "ja"
 slug: "therapist"
 description: "30種類のメディカルハーブと12種類の精油の知識を学び、JAMHA認定ハーバルセラピスト資格の取得を目指す講座です。"
-image: "/Kimiko_Site/images/courses/course1.png"
-heroImage: "/Kimiko_Site/images/courses/therapist_hero.png"
+image: "/botanical-grace/images/courses/course1.png"
+heroImage: "/botanical-grace/images/courses/therapist_hero.png"
 ---
 
 ## 講座概要

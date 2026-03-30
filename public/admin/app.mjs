@@ -6,7 +6,6 @@ import {
   triggerImageGeneration, pollWorkflowStatus, triggerTranslation,
 } from './github-api.mjs';
 
-let langFilter = 'all';
 let uiLang = localStorage.getItem('admin_ui_lang') || 'ja';
 
 // --- Translations ---
@@ -43,7 +42,8 @@ const I18N = {
     noEntries: 'エントリーが見つかりません。',
     createOne: '＋ 作成する',
     errorLoading: 'エントリーの読み込みエラー:',
-    deleteConfirm: (lang, slug) => `${lang}/${slug} を削除しますか？この操作は取り消せません。`,
+    deleteConfirm: (lang, slug) => `${slug} を削除しますか？この操作は取り消せません。`,
+    deleteBothConfirm: (slug) => `${slug} の日本語版・英語版の両方を削除しますか？この操作は取り消せません。`,
     entryDeleted: 'エントリーを削除しました！サイトは約2分で更新されます。',
     delete: '削除',
     // Editor
@@ -82,6 +82,7 @@ const I18N = {
     translationRunning: '翻訳中... 10秒ごとに確認しています。',
     translationStillRunning: 'まだ翻訳中です。GitHub Actionsでステータスを確認してください。',
     saveFirstRequired: '先にエントリーを保存してください。',
+    creatingLangVersion: '{lang}版を新規作成します。内容を入力して保存してください。',
     // Field labels
     fieldTitle: 'タイトル',
     fieldSlug: 'スラッグ',
@@ -131,7 +132,8 @@ const I18N = {
     noEntries: 'No entries found.',
     createOne: '+ Create One',
     errorLoading: 'Error loading entries:',
-    deleteConfirm: (lang, slug) => `Delete ${lang}/${slug}? This cannot be undone.`,
+    deleteConfirm: (lang, slug) => `Delete ${slug}? This cannot be undone.`,
+    deleteBothConfirm: (slug) => `Delete both Japanese and English versions of ${slug}? This cannot be undone.`,
     entryDeleted: 'Entry deleted! Site will update in ~2 minutes.',
     delete: 'Delete',
     newLabel: 'New',
@@ -167,6 +169,7 @@ const I18N = {
     translationRunning: 'Translating... checking status every 10s.',
     translationStillRunning: 'Still translating. Check GitHub Actions for status.',
     saveFirstRequired: 'Please save the entry first.',
+    creatingLangVersion: 'Creating new {lang} version. Enter content and save.',
     fieldTitle: 'Title',
     fieldSlug: 'Slug',
     fieldLang: 'Language',
@@ -330,13 +333,6 @@ function updateSidebarLang() {
   document.querySelector('.sidebar-header h1').textContent = t('loginTitle');
   document.querySelector('.sidebar-header p').textContent = t('loginSubtitle');
 
-  // Update lang filter
-  document.querySelector('.lang-filter label').textContent = t('langFilterLabel');
-  const filterSelect = document.getElementById('lang-filter');
-  filterSelect.options[0].textContent = t('langAll');
-  filterSelect.options[1].textContent = t('langEn');
-  filterSelect.options[2].textContent = t('langJa');
-
   // Update logout button
   document.getElementById('btn-logout').textContent = t('logout');
 
@@ -363,10 +359,6 @@ function toggleUiLang() {
 }
 
 function init() {
-  document.getElementById('lang-filter').addEventListener('change', (e) => {
-    langFilter = e.target.value;
-    route();
-  });
   document.getElementById('btn-logout').addEventListener('click', logout);
   document.getElementById('btn-ui-lang').addEventListener('click', toggleUiLang);
   updateSidebarLang();
@@ -387,11 +379,25 @@ async function loadCounts() {
     try {
       const entries = await listEntries(col);
       entryCache[col] = entries;
-      document.getElementById(`count-${col}`).textContent = entries.length;
+      // Count unique slugs, not total files
+      const slugs = new Set(entries.map(e => e.slug || e._file?.replace('.md', '')));
+      document.getElementById(`count-${col}`).textContent = slugs.size;
     } catch {
       document.getElementById(`count-${col}`).textContent = '?';
     }
   }
+}
+
+/** Group entries by slug, merging ja/en versions */
+function groupBySlug(entries) {
+  const map = {};
+  for (const entry of entries) {
+    const slug = entry.slug || entry._file?.replace('.md', '');
+    const lang = entry.lang || entry._lang;
+    if (!map[slug]) map[slug] = { slug, langs: {} };
+    map[slug].langs[lang] = entry;
+  }
+  return Object.values(map);
 }
 
 // --- Toast ---
@@ -444,42 +450,48 @@ async function renderList(collection) {
       entryCache[collection] = entries;
     }
 
-    const filtered = langFilter === 'all'
-      ? entries
-      : entries.filter(e => (e.lang || e._lang) === langFilter);
+    const groups = groupBySlug(entries);
 
-    filtered.sort((a, b) => {
-      if (collection === 'courses') return (a.order || 0) - (b.order || 0);
-      if (collection === 'articles') return (b.date || '').localeCompare(a.date || '');
-      return (a.title || '').localeCompare(b.title || '');
+    // Sort by the primary (ja) entry, falling back to en
+    groups.sort((a, b) => {
+      const ea = a.langs.ja || a.langs.en || {};
+      const eb = b.langs.ja || b.langs.en || {};
+      if (collection === 'courses') return (ea.order || 0) - (eb.order || 0);
+      if (collection === 'articles') return (eb.date || '').localeCompare(ea.date || '');
+      return (ea.title || '').localeCompare(eb.title || '');
     });
 
     const grid = document.getElementById('entry-grid');
 
-    if (filtered.length === 0) {
+    if (groups.length === 0) {
       grid.innerHTML = `<div class="empty-state"><p>${t('noEntries')}</p><a href="#new/${collection}" class="btn-new">${t('createOne')}</a></div>`;
       return;
     }
 
-    grid.innerHTML = filtered.map(entry => {
-      const lang = entry.lang || entry._lang;
-      const slug = entry.slug || entry._file?.replace('.md', '');
-      const meta = entryMeta(collection, entry);
+    grid.innerHTML = groups.map(group => {
+      // Prefer ja entry for display, fall back to en
+      const primary = group.langs.ja || group.langs.en;
+      const slug = group.slug;
+      const defaultLang = group.langs.ja ? 'ja' : 'en';
+      const meta = entryMeta(collection, primary);
+      const hasJa = !!group.langs.ja;
+      const hasEn = !!group.langs.en;
 
       return `
-        <div class="entry-card" onclick="location.hash='edit/${collection}/${lang}/${slug}'">
+        <div class="entry-card" onclick="location.hash='edit/${collection}/${defaultLang}/${slug}'">
           <div class="entry-thumb">
             ${COLLECTION_ICONS[collection]}
           </div>
           <div class="entry-info">
-            <div class="entry-title">${esc(entry.title || slug)}</div>
+            <div class="entry-title">${esc(primary.title || slug)}</div>
             <div class="entry-meta">
-              <span class="lang-badge ${lang}">${lang}</span>
+              <span class="lang-badge ja ${hasJa ? '' : 'missing'}">JA</span>
+              <span class="lang-badge en ${hasEn ? '' : 'missing'}">EN</span>
               ${meta}
             </div>
           </div>
           <div class="entry-actions">
-            <button class="btn-delete" onclick="event.stopPropagation(); window._deleteEntry('${collection}', '${lang}', '${slug}')" title="${t('delete')}">${ICONS.trash}</button>
+            <button class="btn-delete" onclick="event.stopPropagation(); window._deleteEntry('${collection}', '${defaultLang}', '${slug}')" title="${t('delete')}">${ICONS.trash}</button>
           </div>
         </div>`;
     }).join('');
@@ -496,10 +508,21 @@ function entryMeta(collection, entry) {
   return '';
 }
 
-window._deleteEntry = async function(collection, lang, slug) {
-  if (!confirm(t('deleteConfirm')(lang, slug))) return;
+window._deleteEntry = async function(collection, defaultLang, slug) {
+  // Check which versions exist
+  const entries = entryCache[collection] || [];
+  const jaExists = entries.some(e => (e.slug || e._file?.replace('.md', '')) === slug && (e.lang || e._lang) === 'ja');
+  const enExists = entries.some(e => (e.slug || e._file?.replace('.md', '')) === slug && (e.lang || e._lang) === 'en');
+
+  let msg = t('deleteConfirm')('', slug);
+  if (jaExists && enExists) {
+    msg = t('deleteBothConfirm')(slug);
+  }
+  if (!confirm(msg)) return;
+
   try {
-    await apiDeleteEntry(collection, lang, slug);
+    if (jaExists) await apiDeleteEntry(collection, 'ja', slug);
+    if (enExists) await apiDeleteEntry(collection, 'en', slug);
     toast(t('entryDeleted'), 'success');
     delete entryCache[collection];
     loadCounts();
@@ -515,7 +538,6 @@ const FIELD_DEFS = {
   articles: [
     { key: 'title', label: 'Title', type: 'text', required: true },
     { key: 'slug', label: 'Slug', type: 'text', required: true, half: true },
-    { key: 'lang', label: 'Language', type: 'select', options: ['en', 'ja'], required: true, half: true },
     { key: 'date', label: 'Date', type: 'date', required: true, half: true },
     { key: 'image', label: 'Image Path', type: 'text', half: true },
     { key: 'excerpt', label: 'Excerpt', type: 'textarea-sm', required: true },
@@ -526,7 +548,6 @@ const FIELD_DEFS = {
     { key: 'nameJa', label: 'Japanese Name', type: 'text', required: true, half: true },
     { key: 'scientificName', label: 'Scientific Name', type: 'text', required: true, half: true },
     { key: 'slug', label: 'Slug', type: 'text', required: true, half: true },
-    { key: 'lang', label: 'Language', type: 'select', options: ['en', 'ja'], required: true, half: true },
     { key: 'image', label: 'Image Path', type: 'text', half: true },
     { key: 'actions', label: 'Actions (comma-separated)', type: 'text', required: true },
   ],
@@ -534,7 +555,6 @@ const FIELD_DEFS = {
     { key: 'title', label: 'Title', type: 'text', required: true },
     { key: 'subtitle', label: 'Subtitle', type: 'text' },
     { key: 'slug', label: 'Slug', type: 'text', required: true, half: true },
-    { key: 'lang', label: 'Language', type: 'select', options: ['en', 'ja'], required: true, half: true },
     { key: 'certification', label: 'Certification', type: 'text', required: true, half: true },
     { key: 'order', label: 'Display Order', type: 'number', required: true, half: true },
     { key: 'price', label: 'Price (\u00A5)', type: 'number', required: true, half: true },
@@ -552,35 +572,71 @@ async function renderEditor(collection, lang, slug) {
   const main = document.getElementById('content');
   let frontmatter = {};
   let body = '';
+  let otherLangExists = false;
+  let versionExists = true;
 
   main.innerHTML = `<div class="empty-state"><p>${t('loading')}</p></div>`;
 
   if (!isNew) {
+    // Check if this version exists
     try {
       const data = await readEntry(collection, lang, slug);
       frontmatter = data.frontmatter;
       body = data.body;
     } catch (err) {
-      main.innerHTML = `<p>Error: ${esc(err.message)}</p>`;
-      return;
+      // This language version doesn't exist yet
+      versionExists = false;
+      frontmatter.slug = slug;
+      frontmatter.lang = lang;
+      if (collection === 'articles') {
+        frontmatter.date = new Date().toISOString().slice(0, 10);
+      }
     }
+
+    // Check if the other language version exists
+    const otherLang = lang === 'ja' ? 'en' : 'ja';
+    try {
+      await readEntry(collection, otherLang, slug);
+      otherLangExists = true;
+    } catch { /* doesn't exist */ }
   } else {
     frontmatter.lang = 'ja';
+    lang = 'ja';
     if (collection === 'articles') {
       frontmatter.date = new Date().toISOString().slice(0, 10);
     }
   }
 
   const fields = FIELD_DEFS[collection] || [];
-
   const singularKey = COLLECTION_SINGULARS[collection];
   const label = `${isNew ? t('newLabel') : t('editLabel')} ${t(singularKey)}`;
+  const otherLang = lang === 'ja' ? 'en' : 'ja';
+  const isCreatingNewLang = !isNew && !versionExists;
+
+  // Language tabs (only for existing entries)
+  const langTabs = !isNew ? `
+    <div class="lang-tabs">
+      <a href="#edit/${collection}/ja/${slug}" class="lang-tab ${lang === 'ja' ? 'active' : ''} ${!isNew && lang !== 'ja' && !otherLangExists && lang === 'en' ? '' : ''}">
+        JA — ${t('langJa')}
+      </a>
+      <a href="#edit/${collection}/en/${slug}" class="lang-tab ${lang === 'en' ? 'active' : ''}">
+        EN — ${t('langEn')}
+      </a>
+    </div>` : '';
+
+  // Banner for creating a new language version
+  const newLangBanner = isCreatingNewLang ? `
+    <div class="new-lang-banner">
+      ${t('creatingLangVersion').replace('{lang}', lang === 'ja' ? t('langJa') : t('langEn'))}
+    </div>` : '';
 
   main.innerHTML = `
     <div class="form-header">
       <a href="#${collection}" class="btn-back">${ICONS.back} ${t('back')}</a>
       <h2>${label}</h2>
     </div>
+    ${langTabs}
+    ${newLangBanner}
     <div class="edit-form">
       <div class="form-grid">
         ${fields.map(f => renderField(f, frontmatter)).join('')}
@@ -592,7 +648,7 @@ async function renderEditor(collection, lang, slug) {
       </div>
       <div class="form-actions">
         <button class="btn-save" id="btn-save">${t('saveEntry')}</button>
-        ${!isNew && frontmatter.lang === 'ja' ? `<button class="btn-translate" id="btn-translate">${t('saveAndTranslate')}</button>` : ''}
+        ${!isNew && lang === 'ja' && !otherLangExists ? `<button class="btn-translate" id="btn-translate">${t('saveAndTranslate')}</button>` : ''}
         <a href="#${collection}" class="btn-cancel">${t('cancel')}</a>
       </div>
       <div id="translate-status"></div>
@@ -612,11 +668,13 @@ async function renderEditor(collection, lang, slug) {
     });
   }
 
-  document.getElementById('btn-save').addEventListener('click', () => saveEntry(collection, isNew));
+  // The lang is determined by the tab, not a form field
+  const effectiveIsNew = isNew || isCreatingNewLang;
+  document.getElementById('btn-save').addEventListener('click', () => saveEntry(collection, effectiveIsNew, lang));
 
   const translateBtn = document.getElementById('btn-translate');
   if (translateBtn) {
-    translateBtn.addEventListener('click', () => saveAndTranslate(collection, isNew));
+    translateBtn.addEventListener('click', () => saveAndTranslate(collection, effectiveIsNew, lang));
   }
 
   const genBtn = document.getElementById('btn-generate-image');
@@ -727,7 +785,7 @@ async function generateImage(collection) {
 
 // --- Save ---
 
-async function saveEntryAndReturn(collection, isNew) {
+async function saveEntryAndReturn(collection, isNew, editorLang) {
   const fields = FIELD_DEFS[collection];
   const frontmatter = {};
 
@@ -757,10 +815,12 @@ async function saveEntryAndReturn(collection, isNew) {
   }
 
   const body = document.getElementById('field-body').value;
-  const lang = frontmatter.lang;
+  // Lang comes from the tab, not a form field
+  const lang = editorLang || frontmatter.lang || 'ja';
+  frontmatter.lang = lang;
   const slug = frontmatter.slug;
 
-  if (!lang || !slug) {
+  if (!slug) {
     toast(t('langAndSlugRequired'), 'error');
     return false;
   }
@@ -788,15 +848,15 @@ async function saveEntryAndReturn(collection, isNew) {
   }
 }
 
-async function saveEntry(collection, isNew) {
-  await saveEntryAndReturn(collection, isNew);
+async function saveEntry(collection, isNew, editorLang) {
+  await saveEntryAndReturn(collection, isNew, editorLang);
 }
 
 // --- Save & Translate ---
 
-async function saveAndTranslate(collection, isNew) {
+async function saveAndTranslate(collection, isNew, editorLang) {
   // First save the entry
-  const saved = await saveEntryAndReturn(collection, isNew);
+  const saved = await saveEntryAndReturn(collection, isNew, editorLang);
   if (!saved) return;
 
   const slug = document.getElementById('field-slug')?.value.trim();

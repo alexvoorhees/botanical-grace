@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kimiko Admin — Botanical Grace 8</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar">
+      <div class="sidebar-header">
+        <h1>🌿 Kimiko Admin</h1>
+        <p>Botanical Grace 8</p>
+      </div>
+      <nav>
+        <a href="#articles" class="nav-item" data-collection="articles">
+          <span class="nav-icon">📝</span>
+          <span class="nav-label">Articles</span>
+          <span class="nav-count" id="count-articles">—</span>
+        </a>
+        <a href="#herbs" class="nav-item" data-collection="herbs">
+          <span class="nav-icon">🌿</span>
+          <span class="nav-label">Herbs</span>
+          <span class="nav-count" id="count-herbs">—</span>
+        </a>
+        <a href="#courses" class="nav-item" data-collection="courses">
+          <span class="nav-icon">📚</span>
+          <span class="nav-label">Courses</span>
+          <span class="nav-count" id="count-courses">—</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="lang-filter">
+          <label>Language filter:</label>
+          <select id="lang-filter">
+            <option value="all">All</option>
+            <option value="en">English</option>
+            <option value="ja">Japanese</option>
+          </select>
+        </div>
+      </div>
+    </aside>
+    <main id="content">
+      <div id="welcome" class="welcome-screen">
+        <h2>Welcome to Kimiko Admin</h2>
+        <p>Select a collection from the sidebar to get started.</p>
+        <div class="welcome-cards">
+          <a href="#articles" class="welcome-card">
+            <span class="welcome-icon">📝</span>
+            <span>Articles</span>
+          </a>
+          <a href="#herbs" class="welcome-card">
+            <span class="welcome-icon">🌿</span>
+            <span>Herbs</span>
+          </a>
+          <a href="#courses" class="welcome-card">
+            <span class="welcome-icon">📚</span>
+            <span>Courses</span>
+          </a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script type="module" src="/app.mjs"></script>
+</body>
+</html>

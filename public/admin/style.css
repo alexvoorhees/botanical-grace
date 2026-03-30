@@ -369,6 +369,87 @@ body {
 
 .welcome-icon svg { width: 32px; height: 32px; }
 
+/* === Welcome Greeting === */
+
+.welcome-greeting {
+  margin-bottom: 2rem;
+}
+
+.greeting-emoji {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.greeting-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--sage-700);
+  margin-bottom: 0.5rem;
+  font-family: 'Noto Sans JP', 'Inter', sans-serif;
+}
+
+.greeting-subtitle {
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+/* === Visitor Stats Card === */
+
+.welcome-stats {
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 280px;
+}
+
+.stats-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 2rem;
+  background: white;
+  border: 1px solid var(--sage-100);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+.stats-icon {
+  color: var(--sage-500);
+  display: flex;
+}
+
+.stats-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.stats-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--sage-700);
+}
+
+.stats-value.stats-error {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.stats-link {
+  font-size: 0.8rem;
+  color: var(--sage-500);
+  text-decoration: none;
+  margin-top: 0.25rem;
+}
+
+.stats-link:hover {
+  color: var(--sage-700);
+  text-decoration: underline;
+}
+
 /* === List View === */
 
 .list-header {

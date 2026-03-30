@@ -36,6 +36,13 @@ const I18N = {
     // Welcome
     welcomeTitle: 'Kimiko 管理画面へようこそ',
     welcomeText: 'サイドバーからコレクションを選んでください。',
+    welcomeGreetingMorning: 'おはようございます、きみこ先生',
+    welcomeGreetingAfternoon: 'こんにちは、きみこ先生',
+    welcomeGreetingEvening: 'こんばんは、きみこ先生',
+    welcomeStatsTitle: 'サイト訪問者',
+    welcomeStatsLoading: '読み込み中...',
+    welcomeStatsError: '統計を取得できませんでした',
+    welcomeStatsDetail: '詳細を見る →',
     // List
     newEntry: '＋ 新規作成',
     loading: '読み込み中...',
@@ -143,6 +150,13 @@ const I18N = {
     uiLangToggle: '日本語',
     welcomeTitle: 'Welcome to Kimiko Admin',
     welcomeText: 'Select a collection from the sidebar to get started.',
+    welcomeGreetingMorning: 'Good morning, Kimiko-sensei',
+    welcomeGreetingAfternoon: 'Good afternoon, Kimiko-sensei',
+    welcomeGreetingEvening: 'Good evening, Kimiko-sensei',
+    welcomeStatsTitle: 'Site Visitors',
+    welcomeStatsLoading: 'Loading...',
+    welcomeStatsError: 'Could not load stats',
+    welcomeStatsDetail: 'View details →',
     newEntry: '+ New Entry',
     loading: 'Loading...',
     noEntries: 'No entries found.',
@@ -473,18 +487,82 @@ function toast(msg, type = 'info') {
 
 // --- Welcome ---
 
+const GOATCOUNTER_CODE = 'botanicalgrace';
+
+function getGreeting() {
+  const hour = new Date().getHours();
+  if (hour < 12) return t('welcomeGreetingMorning');
+  if (hour < 17) return t('welcomeGreetingAfternoon');
+  return t('welcomeGreetingEvening');
+}
+
+function getSeasonalEmoji() {
+  const month = new Date().getMonth();
+  if (month >= 2 && month <= 4) return '🌸';
+  if (month >= 5 && month <= 7) return '🌿';
+  if (month >= 8 && month <= 10) return '🍂';
+  return '❄️';
+}
+
+async function fetchVisitorStats() {
+  try {
+    const res = await fetch(`https://${GOATCOUNTER_CODE}.goatcounter.com/counter//TOTAL.json`);
+    if (!res.ok) throw new Error('API error');
+    const data = await res.json();
+    return { total: data.count_unique || data.count || '—' };
+  } catch {
+    return null;
+  }
+}
+
 function showWelcome() {
   const main = document.getElementById('content');
+  const emoji = getSeasonalEmoji();
+  const greeting = getGreeting();
+
   main.innerHTML = `
     <div class="welcome-screen">
-      <h2>${t('welcomeTitle')}</h2>
-      <p>${t('welcomeText')}</p>
+      <div class="welcome-greeting">
+        <span class="greeting-emoji">${emoji}</span>
+        <h2 class="greeting-text">${greeting}</h2>
+        <p class="greeting-subtitle">${t('welcomeText')}</p>
+      </div>
+
+      <div class="welcome-stats">
+        <div class="stats-card">
+          <span class="stats-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </span>
+          <span class="stats-label">${t('welcomeStatsTitle')}</span>
+          <span class="stats-value" id="stats-total">${t('welcomeStatsLoading')}</span>
+          <a href="https://${GOATCOUNTER_CODE}.goatcounter.com" target="_blank" rel="noopener" class="stats-link">
+            ${t('welcomeStatsDetail')}
+          </a>
+        </div>
+      </div>
+
       <div class="welcome-cards">
         <a href="#articles" class="welcome-card"><span class="welcome-icon">${ICONS.articles}</span><span>${t('articles')}</span></a>
         <a href="#herbs" class="welcome-card"><span class="welcome-icon">${ICONS.herbs}</span><span>${t('herbs')}</span></a>
         <a href="#courses" class="welcome-card"><span class="welcome-icon">${ICONS.courses}</span><span>${t('courses')}</span></a>
       </div>
     </div>`;
+
+  fetchVisitorStats().then(stats => {
+    const el = document.getElementById('stats-total');
+    if (!el) return;
+    if (stats) {
+      el.textContent = typeof stats.total === 'number' ? stats.total.toLocaleString() : stats.total;
+    } else {
+      el.textContent = t('welcomeStatsError');
+      el.classList.add('stats-error');
+    }
+  });
 }
 
 // --- List View ---

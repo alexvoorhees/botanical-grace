@@ -70,7 +70,9 @@ const I18N = {
     imageGenerated: '画像が生成されました！次のデプロイ後にサイトに表示されます（約2分）。',
     imageGenFailed: '画像生成に失敗しました',
     imageGenNote: '画像生成はGitHub Actionsで実行されます。1〜2分かかり、次のデプロイ後にサイトに反映されます。',
-    enterPrompt: '画像プロンプトを入力してください',
+    imagePromptPlaceholder: '記事に関連するシーンを説明してください（例：ハーブティーを淹れている様子）',
+    imageStyleNote: '水彩ボタニカルスタイルは自動で適用されます。シーンの説明だけ入力してください。',
+    enterPrompt: '画像の説明を入力してください',
     setSlugFirst: '先にスラッグを設定してください',
     stillRunning: 'まだ実行中です。GitHub Actionsでステータスを確認してください。',
     viewDetails: '詳細を見る',
@@ -158,7 +160,9 @@ const I18N = {
     imageGenerated: 'Image generated! It will appear on the site after the next deploy (~2 min).',
     imageGenFailed: 'Image generation failed',
     imageGenNote: 'Image generation runs via GitHub Actions. It takes 1-2 minutes and the image will appear on the site after the next deploy.',
-    enterPrompt: 'Enter an image prompt',
+    imagePromptPlaceholder: 'Describe the scene for this article (e.g., a person brewing herbal tea)',
+    imageStyleNote: 'Watercolor botanical style is applied automatically. Just describe the scene.',
+    enterPrompt: 'Enter a scene description',
     setSlugFirst: 'Set a slug first',
     stillRunning: 'Still running. Check GitHub Actions for status.',
     viewDetails: 'View details',
@@ -706,12 +710,17 @@ function renderField(field, data) {
   return `<div class="${cls}"><label for="field-${field.key}">${label}</label><input type="${inputType}" id="field-${field.key}" value="${esc(String(val))}"${req}></div>`;
 }
 
+const IMAGE_STYLE_SUFFIX = 'Elegant botanical watercolor illustration on a clean off-white (#FAFAF5) background. Soft naturalistic style with gentle shadows. Minimalist composition, no text or labels.';
+
 function renderImagePanel(collection, frontmatter) {
   if (collection === 'courses') return '';
 
-  const promptTemplate = collection === 'herbs'
-    ? `${frontmatter.nameEn || frontmatter.title || '[Herb name]'} (${frontmatter.scientificName || '[Scientific name]'}) with distinctive flowers and leaves. Elegant botanical watercolor illustration on a clean off-white (#FAFAF5) background. Soft naturalistic style with gentle shadows. Minimalist composition, no text or labels.`
-    : `[Describe the scene relevant to this article]. Wellness aesthetic. Elegant botanical watercolor illustration on a clean off-white (#FAFAF5) background. Soft naturalistic style with gentle shadows. Minimalist composition, no text or labels.`;
+  // Pre-fill with just the scene description, not the style
+  const sceneDefault = collection === 'herbs'
+    ? `${frontmatter.nameEn || frontmatter.title || ''} (${frontmatter.scientificName || ''}) with distinctive flowers and leaves`
+    : '';
+
+  const placeholder = t('imagePromptPlaceholder');
 
   return `
     <div class="form-group full">
@@ -719,7 +728,8 @@ function renderImagePanel(collection, frontmatter) {
         <summary>${ICONS.palette} ${t('generateImage')}</summary>
         <div class="image-panel-content">
           <label style="font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-top:0.5rem;display:block;">${t('imagePromptLabel')}</label>
-          <textarea id="image-prompt">${esc(promptTemplate)}</textarea>
+          <textarea id="image-prompt" placeholder="${esc(placeholder)}">${esc(sceneDefault)}</textarea>
+          <p class="image-gen-note">${t('imageStyleNote')}</p>
           <button class="btn-generate" id="btn-generate-image">${ICONS.palette} ${t('generateImage')}</button>
           <div id="image-gen-status"></div>
           <p class="image-gen-note">${t('imageGenNote')}</p>
@@ -737,11 +747,14 @@ async function generateImage(collection) {
   if (!prompt) { toast(t('enterPrompt'), 'error'); return; }
   if (!slug) { toast(t('setSlugFirst'), 'error'); return; }
 
+  // Append the standard watercolor botanical style
+  const fullPrompt = `${prompt}. ${IMAGE_STYLE_SUFFIX}`;
+
   btn.disabled = true;
   status.innerHTML = `<div class="generating-spinner"><div class="spinner"></div>${t('triggeringGeneration')}</div>`;
 
   try {
-    await triggerImageGeneration(collection, slug, prompt);
+    await triggerImageGeneration(collection, slug, fullPrompt);
 
     // Update image path field
     const imgField = document.getElementById('field-image');

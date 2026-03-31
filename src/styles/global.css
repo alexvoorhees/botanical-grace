@@ -91,6 +91,52 @@ html {
   white-space: nowrap;
 }
 
+/* Course content list styling for mobile readability */
+.course-content ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 1rem 0;
+}
+
+.course-content ul li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+}
+
+.course-content ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-sage-400);
+}
+
+.course-content ol {
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+.course-content ol li {
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+}
+
+/* Better visual separation between content sections */
+.course-content h2 + p,
+.course-content h3 + p {
+  margin-top: 0.5rem;
+}
+
+.course-content p + ul,
+.course-content p + ol {
+  margin-top: 0.5rem;
+}
+
 /* Scroll-triggered fade-in */
 .fade-in-section {
   opacity: 0;

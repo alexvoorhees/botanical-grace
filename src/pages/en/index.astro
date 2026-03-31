@@ -59,7 +59,7 @@ const announcements = [
 <BaseLayout>
   <!-- Hero Carousel -->
   <section class="relative overflow-hidden" id="hero-carousel">
-    <div class="relative h-[480px] sm:h-[520px] lg:h-[560px]">
+    <div class="relative h-[380px] sm:h-[480px] lg:h-[560px]">
       {heroSlides.map((slide, i) => (
         <div
           class:list={[
@@ -77,22 +77,22 @@ const announcements = [
           <div class="absolute inset-0 bg-gradient-to-b from-sage-900/60 via-sage-900/50 to-sage-900/70"></div>
           <div class="relative h-full flex items-center">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full">
-              <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight leading-tight drop-shadow-lg">
+              <h1 class="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 tracking-tight leading-tight drop-shadow-lg">
                 {slide.heading}
               </h1>
-              <p class="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-8 drop-shadow-md">
+              <p class="text-base sm:text-xl text-white/90 max-w-2xl mx-auto mb-5 sm:mb-8 drop-shadow-md">
                 {slide.sub}
               </p>
-              <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <div class="flex flex-row gap-3 sm:gap-4 justify-center">
                 <a
                   href={`${base}/${lang}/courses/`}
-                  class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-sage-700 font-semibold rounded-xl hover:bg-sage-50 transition-colors text-lg shadow-lg"
+                  class="inline-flex items-center justify-center gap-2 px-5 sm:px-8 py-3 sm:py-4 bg-white text-sage-700 font-semibold rounded-xl hover:bg-sage-50 transition-colors text-sm sm:text-lg shadow-lg"
                 >
                   {t(lang, 'hero.cta')}
                 </a>
                 <a
                   href={`${base}/${lang}/contact/`}
-                  class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/15 text-white font-semibold rounded-xl border-2 border-white/30 hover:bg-white/25 transition-colors text-lg backdrop-blur-sm"
+                  class="inline-flex items-center justify-center gap-2 px-5 sm:px-8 py-3 sm:py-4 bg-white/15 text-white font-semibold rounded-xl border-2 border-white/30 hover:bg-white/25 transition-colors text-sm sm:text-lg backdrop-blur-sm"
                 >
                   {t(lang, 'hero.contact')}
                 </a>
@@ -196,52 +196,52 @@ const announcements = [
         <h2 class="text-3xl font-bold text-text mb-3 text-balance">Why Choose Us</h2>
         <p class="text-text/60">What makes BOTANICAL GRACE 8 special</p>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-        <div class="text-center p-5 rounded-2xl bg-sage-50/50 border border-sage-100">
-          <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-sage-100 flex items-center justify-center">
-            <svg class="w-7 h-7 text-sage-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+      <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
+        <div class="text-center p-4 sm:p-5 rounded-2xl bg-sage-50/50 border border-sage-100">
+          <div class="w-11 h-11 sm:w-14 sm:h-14 mx-auto mb-2 sm:mb-3 rounded-2xl bg-sage-100 flex items-center justify-center">
+            <svg class="w-6 h-6 sm:w-7 sm:h-7 text-sage-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
             </svg>
           </div>
-          <h3 class="font-bold text-text text-sm mb-1">JAMHA & AEAJ Accredited</h3>
-          <p class="text-xs text-text/60">Officially certified classroom</p>
+          <h3 class="font-bold text-text text-xs sm:text-sm mb-1">JAMHA & AEAJ Accredited</h3>
+          <p class="text-xs text-text/60 hidden sm:block">Officially certified classroom</p>
         </div>
-        <div class="text-center p-5 rounded-2xl bg-sage-50/50 border border-sage-100">
-          <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-sage-100 flex items-center justify-center">
-            <svg class="w-7 h-7 text-sage-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <div class="text-center p-4 sm:p-5 rounded-2xl bg-sage-50/50 border border-sage-100">
+          <div class="w-11 h-11 sm:w-14 sm:h-14 mx-auto mb-2 sm:mb-3 rounded-2xl bg-sage-100 flex items-center justify-center">
+            <svg class="w-6 h-6 sm:w-7 sm:h-7 text-sage-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
               <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
             </svg>
           </div>
-          <h3 class="font-bold text-text text-sm mb-1">Steps from Shiodome Station</h3>
-          <p class="text-xs text-text/60">Central Shiodome location</p>
+          <h3 class="font-bold text-text text-xs sm:text-sm mb-1">Steps from Shiodome Station</h3>
+          <p class="text-xs text-text/60 hidden sm:block">Central Shiodome location</p>
         </div>
-        <div class="text-center p-5 rounded-2xl bg-sage-50/50 border border-sage-100">
-          <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-sage-100 flex items-center justify-center">
-            <svg class="w-7 h-7 text-sage-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <div class="text-center p-4 sm:p-5 rounded-2xl bg-sage-50/50 border border-sage-100">
+          <div class="w-11 h-11 sm:w-14 sm:h-14 mx-auto mb-2 sm:mb-3 rounded-2xl bg-sage-100 flex items-center justify-center">
+            <svg class="w-6 h-6 sm:w-7 sm:h-7 text-sage-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
             </svg>
           </div>
-          <h3 class="font-bold text-text text-sm mb-1">Flexible Scheduling</h3>
-          <p class="text-xs text-text/60">Choose your own lesson days</p>
+          <h3 class="font-bold text-text text-xs sm:text-sm mb-1">Flexible Scheduling</h3>
+          <p class="text-xs text-text/60 hidden sm:block">Choose your own lesson days</p>
         </div>
-        <div class="text-center p-5 rounded-2xl bg-sage-50/50 border border-sage-100">
-          <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-sage-100 flex items-center justify-center">
-            <svg class="w-7 h-7 text-sage-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <div class="text-center p-4 sm:p-5 rounded-2xl bg-sage-50/50 border border-sage-100">
+          <div class="w-11 h-11 sm:w-14 sm:h-14 mx-auto mb-2 sm:mb-3 rounded-2xl bg-sage-100 flex items-center justify-center">
+            <svg class="w-6 h-6 sm:w-7 sm:h-7 text-sage-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
             </svg>
           </div>
-          <h3 class="font-bold text-text text-sm mb-1">One-on-One Lessons</h3>
-          <p class="text-xs text-text/60">Online & children welcome</p>
+          <h3 class="font-bold text-text text-xs sm:text-sm mb-1">One-on-One Lessons</h3>
+          <p class="text-xs text-text/60 hidden sm:block">Online & children welcome</p>
         </div>
-        <div class="text-center p-5 rounded-2xl bg-sage-50/50 border border-sage-100">
-          <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-sage-100 flex items-center justify-center">
-            <svg class="w-7 h-7 text-sage-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <div class="text-center p-4 sm:p-5 rounded-2xl bg-sage-50/50 border border-sage-100">
+          <div class="w-11 h-11 sm:w-14 sm:h-14 mx-auto mb-2 sm:mb-3 rounded-2xl bg-sage-100 flex items-center justify-center">
+            <svg class="w-6 h-6 sm:w-7 sm:h-7 text-sage-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
             </svg>
           </div>
-          <h3 class="font-bold text-text text-sm mb-1">Free Exam Prep</h3>
-          <p class="text-xs text-text/60">Support until you pass</p>
+          <h3 class="font-bold text-text text-xs sm:text-sm mb-1">Free Exam Prep</h3>
+          <p class="text-xs text-text/60 hidden sm:block">Support until you pass</p>
         </div>
       </div>
     </div>
@@ -305,33 +305,33 @@ const announcements = [
   <!-- Promotional Banners -->
   <section class="py-12 lg:py-16 bg-cream fade-in-section">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <a href={`${base}/${lang}/herbs/`} class="group block bg-white rounded-2xl p-6 border border-sage-100 shadow-sm hover:shadow-md transition-shadow text-center">
-          <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-sage-100 flex items-center justify-center group-hover:bg-sage-200 transition-colors">
-            <svg class="w-7 h-7 text-sage-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+      <div class="grid grid-cols-3 gap-3 sm:gap-6">
+        <a href={`${base}/${lang}/herbs/`} class="group block bg-white rounded-2xl p-3 sm:p-6 border border-sage-100 shadow-sm hover:shadow-md transition-shadow text-center">
+          <div class="w-10 h-10 sm:w-14 sm:h-14 mx-auto mb-2 sm:mb-4 rounded-2xl bg-sage-100 flex items-center justify-center group-hover:bg-sage-200 transition-colors">
+            <svg class="w-5 h-5 sm:w-7 sm:h-7 text-sage-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
             </svg>
           </div>
-          <h3 class="font-bold text-text mb-1">Herb Directory</h3>
-          <p class="text-sm text-text/60">Browse medicinal herb profiles</p>
+          <h3 class="font-bold text-text text-xs sm:text-base mb-0 sm:mb-1">Herbs</h3>
+          <p class="text-xs sm:text-sm text-text/60 hidden sm:block">Browse medicinal herb profiles</p>
         </a>
-        <a href="https://bg8s.theshop.jp/" target="_blank" rel="noopener noreferrer" class="group block bg-white rounded-2xl p-6 border border-sage-100 shadow-sm hover:shadow-md transition-shadow text-center">
-          <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gold-100 flex items-center justify-center group-hover:bg-gold-200 transition-colors">
-            <svg class="w-7 h-7 text-gold-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <a href="https://bg8s.theshop.jp/" target="_blank" rel="noopener noreferrer" class="group block bg-white rounded-2xl p-3 sm:p-6 border border-sage-100 shadow-sm hover:shadow-md transition-shadow text-center">
+          <div class="w-10 h-10 sm:w-14 sm:h-14 mx-auto mb-2 sm:mb-4 rounded-2xl bg-gold-100 flex items-center justify-center group-hover:bg-gold-200 transition-colors">
+            <svg class="w-5 h-5 sm:w-7 sm:h-7 text-gold-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
             </svg>
           </div>
-          <h3 class="font-bold text-text mb-1">Online Shop</h3>
-          <p class="text-sm text-text/60">Browse herb products</p>
+          <h3 class="font-bold text-text text-xs sm:text-base mb-0 sm:mb-1">Shop</h3>
+          <p class="text-xs sm:text-sm text-text/60 hidden sm:block">Browse herb products</p>
         </a>
-        <a href={`${base}/${lang}/contact/`} class="group block bg-white rounded-2xl p-6 border border-sage-100 shadow-sm hover:shadow-md transition-shadow text-center">
-          <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-sage-100 flex items-center justify-center group-hover:bg-sage-200 transition-colors">
-            <svg class="w-7 h-7 text-sage-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <a href={`${base}/${lang}/contact/`} class="group block bg-white rounded-2xl p-3 sm:p-6 border border-sage-100 shadow-sm hover:shadow-md transition-shadow text-center">
+          <div class="w-10 h-10 sm:w-14 sm:h-14 mx-auto mb-2 sm:mb-4 rounded-2xl bg-sage-100 flex items-center justify-center group-hover:bg-sage-200 transition-colors">
+            <svg class="w-5 h-5 sm:w-7 sm:h-7 text-sage-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
             </svg>
           </div>
-          <h3 class="font-bold text-text mb-1">Contact Us</h3>
-          <p class="text-sm text-text/60">Free consultations available</p>
+          <h3 class="font-bold text-text text-xs sm:text-base mb-0 sm:mb-1">Contact</h3>
+          <p class="text-xs sm:text-sm text-text/60 hidden sm:block">Free consultations available</p>
         </a>
       </div>
     </div>
@@ -382,18 +382,30 @@ const announcements = [
           ))}
         </div>
 
-        <!-- Dots -->
-        <div class="flex justify-center gap-2 mt-6">
-          {testimonials.map((_, i) => (
-            <button
-              class:list={[
-                'testimonial-dot w-2.5 h-2.5 rounded-full transition-all duration-300',
-                i === 0 ? 'bg-sage-500 w-6' : 'bg-sage-300',
-              ]}
-              data-tdot={i}
-              aria-label={`Testimonial ${i + 1}`}
-            />
-          ))}
+        <!-- Dots + Arrows -->
+        <div class="flex items-center justify-center gap-3 mt-6">
+          <button id="testimonial-prev" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-sage-100 border border-sage-200 flex items-center justify-center text-sage-600 hover:bg-sage-200 transition-colors shrink-0" aria-label="Previous testimonial">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+          <div class="flex gap-2">
+            {testimonials.map((_, i) => (
+              <button
+                class:list={[
+                  'testimonial-dot w-2.5 h-2.5 rounded-full transition-all duration-300',
+                  i === 0 ? 'bg-sage-500 w-6' : 'bg-sage-300',
+                ]}
+                data-tdot={i}
+                aria-label={`Testimonial ${i + 1}`}
+              />
+            ))}
+          </div>
+          <button id="testimonial-next" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-sage-100 border border-sage-200 flex items-center justify-center text-sage-600 hover:bg-sage-200 transition-colors shrink-0" aria-label="Next testimonial">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
         </div>
       </div>
 
@@ -413,16 +425,16 @@ const announcements = [
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h2 class="text-3xl font-bold mb-4 text-balance">Start Your Herbal Journey</h2>
       <p class="text-sage-200 mb-8 text-lg leading-relaxed">Contact us for a free consultation or to learn more about our certification programs.</p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <div class="flex flex-row gap-3 sm:gap-4 justify-center">
         <a
           href={`${base}/${lang}/contact/`}
-          class="inline-flex items-center gap-2 px-8 py-4 bg-gold-400 text-sage-900 font-semibold rounded-xl hover:bg-gold-300 transition-colors text-lg"
+          class="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gold-400 text-sage-900 font-semibold rounded-xl hover:bg-gold-300 transition-colors text-base sm:text-lg"
         >
           {t(lang, 'nav.contact')}
         </a>
         <a
           href="tel:070-1581-0168"
-          class="inline-flex items-center gap-2 px-8 py-4 bg-white/15 text-white font-semibold rounded-xl border-2 border-white/30 hover:bg-white/25 transition-colors text-lg"
+          class="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white/15 text-white font-semibold rounded-xl border-2 border-white/30 hover:bg-white/25 transition-colors text-base sm:text-lg"
         >
           TEL: 070-1581-0168
         </a>
@@ -482,12 +494,28 @@ const announcements = [
   }
 
   tDots.forEach((dot, i) => {
-    dot.addEventListener('click', () => tGoTo(i));
+    dot.addEventListener('click', () => { tGoTo(i); resetTestimonialTimer(); });
   });
 
-  setInterval(() => {
+  document.getElementById('testimonial-prev')?.addEventListener('click', () => {
+    tGoTo((tCurrent - 1 + tTotal) % tTotal);
+    resetTestimonialTimer();
+  });
+  document.getElementById('testimonial-next')?.addEventListener('click', () => {
+    tGoTo((tCurrent + 1) % tTotal);
+    resetTestimonialTimer();
+  });
+
+  let testimonialInterval = setInterval(() => {
     tGoTo((tCurrent + 1) % tTotal);
   }, 6000);
+
+  function resetTestimonialTimer() {
+    clearInterval(testimonialInterval);
+    testimonialInterval = setInterval(() => {
+      tGoTo((tCurrent + 1) % tTotal);
+    }, 6000);
+  }
 
   // Scroll-triggered fade-in
   function initFadeIn() {

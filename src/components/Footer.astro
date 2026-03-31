@@ -11,7 +11,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
       <!-- Brand -->
       <div>
-        <img src={`${base}/images/brand/logo_b.png`} alt="BOTANICAL GRACE 8" class="h-10 w-auto brightness-0 invert mb-2" />
+        <img src={`${base}/images/brand/logo_b.png`} alt="BOTANICAL GRACE 8" class="h-10 w-auto brightness-0 invert mb-2" loading="lazy" decoding="async" />
         <p class="text-sage-300 text-sm mb-4">{t(lang, 'site.subtitle')}</p>
         <div class="flex gap-3">
           <a

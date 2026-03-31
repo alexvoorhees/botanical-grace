@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alexvoorhees.github.io/botanical-grace/sitemap-index.xml

@@ -35,7 +35,7 @@ const initial = title.charAt(0).toUpperCase();
 >
   <div class="aspect-[16/9] bg-sage-50 overflow-hidden">
     {image ? (
-      <img src={image} alt={title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+      <img src={image} alt={title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
     ) : (
       <div class="w-full h-full flex flex-col items-center justify-center" style={`background: linear-gradient(135deg, ${palette.from}, ${palette.to});`}>
         <span class="text-3xl font-bold mb-1 select-none" style={`color: ${palette.accent};`}>{initial}</span>

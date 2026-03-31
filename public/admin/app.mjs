@@ -7,6 +7,7 @@ import {
 } from './github-api.mjs';
 
 let uiLang = localStorage.getItem('admin_ui_lang') || 'ja';
+const GOATCOUNTER_CODE = 'botanicalgrace';
 
 // --- Translations ---
 const I18N = {
@@ -487,8 +488,6 @@ function toast(msg, type = 'info') {
 }
 
 // --- Welcome ---
-
-const GOATCOUNTER_CODE = 'botanicalgrace';
 
 function getGreeting() {
   const hour = new Date().getHours();

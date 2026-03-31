@@ -40,7 +40,7 @@ const I18N = {
     welcomeGreetingMorning: 'おはようございます、きみこ先生',
     welcomeGreetingAfternoon: 'こんにちは、きみこ先生',
     welcomeGreetingEvening: 'こんばんは、きみこ先生',
-    welcomeStatsTitle: 'サイト訪問者',
+    welcomeStatsTitle: 'サイト訪問者（過去30日）',
     welcomeStatsLoading: '読み込み中...',
     welcomeStatsError: '統計を取得できませんでした',
     welcomeStatsDetail: '詳細を見る →',
@@ -154,7 +154,7 @@ const I18N = {
     welcomeGreetingMorning: 'Good morning, Kimiko-sensei',
     welcomeGreetingAfternoon: 'Good afternoon, Kimiko-sensei',
     welcomeGreetingEvening: 'Good evening, Kimiko-sensei',
-    welcomeStatsTitle: 'Site Visitors',
+    welcomeStatsTitle: 'Site Visitors (Last 30 Days)',
     welcomeStatsLoading: 'Loading...',
     welcomeStatsError: 'Could not load stats',
     welcomeStatsDetail: 'View details →',
@@ -506,7 +506,8 @@ function getSeasonalEmoji() {
 
 async function fetchVisitorStats() {
   try {
-    const res = await fetch(`https://${GOATCOUNTER_CODE}.goatcounter.com/counter/TOTAL.json`);
+    const start = new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10);
+    const res = await fetch(`https://${GOATCOUNTER_CODE}.goatcounter.com/counter/TOTAL.json?start=${start}`);
     if (!res.ok) throw new Error('API error');
     const data = await res.json();
     return { total: data.count_unique || data.count || '—' };

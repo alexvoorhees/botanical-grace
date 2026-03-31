@@ -404,9 +404,7 @@ function updateSidebarLang() {
   document.querySelector('[data-collection="herbs"] .nav-label').textContent = t('herbs');
   document.querySelector('[data-collection="courses"] .nav-label').textContent = t('courses');
 
-  // Update sidebar header
-  document.querySelector('.sidebar-header h1').textContent = t('loginTitle');
-  document.querySelector('.sidebar-header p').textContent = t('loginSubtitle');
+  // Sidebar header is now a logo image — no text to update
 
   // Update logout button
   document.getElementById('btn-logout').textContent = t('logout');

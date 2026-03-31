@@ -506,7 +506,7 @@ function getSeasonalEmoji() {
 
 async function fetchVisitorStats() {
   try {
-    const res = await fetch(`https://${GOATCOUNTER_CODE}.goatcounter.com/counter//TOTAL.json`);
+    const res = await fetch(`https://${GOATCOUNTER_CODE}.goatcounter.com/counter/TOTAL.json`);
     if (!res.ok) throw new Error('API error');
     const data = await res.json();
     return { total: data.count_unique || data.count || '—' };

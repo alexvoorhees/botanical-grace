@@ -91,6 +91,18 @@ html {
   white-space: nowrap;
 }
 
+/* Scroll-triggered fade-in */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 body {
   background-color: var(--color-cream);
   color: var(--color-text);

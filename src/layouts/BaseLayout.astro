@@ -2,20 +2,29 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { getLangFromUrl } from '../i18n/languages';
+import { getLangFromUrl, getLocalizedUrl } from '../i18n/languages';
 import { t } from '../i18n/utils';
 
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
 }
 
 const lang = getLangFromUrl(Astro.url);
-const { title, description } = Astro.props;
+const { title, description, ogImage } = Astro.props;
 
 const siteTitle = t(lang, 'site.title');
 const pageTitle = title ? `${title} | ${siteTitle}` : siteTitle;
 const pageDescription = description || t(lang, 'site.description');
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const siteUrl = import.meta.env.SITE || 'https://alexvoorhees.github.io';
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImageUrl = new URL(ogImage || `${base}/images/hero/slide1.jpg`, siteUrl).href;
+
+const altLang = lang === 'ja' ? 'en' : 'ja';
+const altUrl = new URL(getLocalizedUrl(Astro.url, altLang as 'ja' | 'en'), siteUrl).href;
 ---
 
 <!doctype html>
@@ -25,6 +34,22 @@ const pageDescription = description || t(lang, 'site.description');
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={pageDescription} />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}/favicon.svg`} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang={lang} href={canonicalUrl} />
+    <link rel="alternate" hreflang={altLang} href={altUrl} />
+    <!-- Open Graph -->
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteTitle} />
+    <meta property="og:locale" content={lang === 'ja' ? 'ja_JP' : 'en_US'} />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImageUrl} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

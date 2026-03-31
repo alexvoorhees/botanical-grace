@@ -399,18 +399,21 @@ window.addEventListener('hashchange', route);
 // --- Init ---
 
 function updateSidebarLang() {
-  // Update nav labels
-  document.querySelector('[data-collection="articles"] .nav-label').textContent = t('articles');
-  document.querySelector('[data-collection="herbs"] .nav-label').textContent = t('herbs');
-  document.querySelector('[data-collection="courses"] .nav-label').textContent = t('courses');
-
-  // Sidebar header is now a logo image — no text to update
+  // Update nav labels (guard against null in case DOM isn't ready)
+  const articlesNav = document.querySelector('[data-collection="articles"] .nav-label');
+  const herbsNav = document.querySelector('[data-collection="herbs"] .nav-label');
+  const coursesNav = document.querySelector('[data-collection="courses"] .nav-label');
+  if (articlesNav) articlesNav.textContent = t('articles');
+  if (herbsNav) herbsNav.textContent = t('herbs');
+  if (coursesNav) coursesNav.textContent = t('courses');
 
   // Update logout button
-  document.getElementById('btn-logout').textContent = t('logout');
+  const logoutBtn = document.getElementById('btn-logout');
+  if (logoutBtn) logoutBtn.textContent = t('logout');
 
   // Update UI lang toggle
-  document.getElementById('btn-ui-lang').textContent = t('uiLangToggle');
+  const uiLangBtn = document.getElementById('btn-ui-lang');
+  if (uiLangBtn) uiLangBtn.textContent = t('uiLangToggle');
 
   // Update login screen if visible
   const loginTitle = document.querySelector('.login-card h1');

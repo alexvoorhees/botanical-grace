@@ -1,10 +1,10 @@
 ---
 title: "ハーブティーの基本と美味しい淹れ方"
-date: "2024-03-05"
-excerpt: "ハーブティーを美味しく淹れるコツと、目的に合わせたハーブの選び方をご紹介します。"
-image: "/botanical-grace/images/articles/herbal-tea-basics.png"
-lang: "ja"
 slug: "herbal-tea-basics"
+date: "2024-03-05"
+image: "/botanical-grace/images/articles/herbal-tea-basics.png"
+excerpt: "ハーブティーを美味しく淹れるコツと、目的に合わせたハーブの選び方をご紹介します。"
+lang: "ja"
 ---
 
 ## ハーブティーの魅力
@@ -31,3 +31,5 @@ slug: "herbal-tea-basics"
 - **風邪の予防**: エキナセア、エルダーフラワー
 - **消化を助けたい時**: ペパーミント、フェンネル
 - **美肌を目指す**: ローズヒップ、ハイビスカス
+
+Wow!
